@@ -6,80 +6,79 @@ using namespace std;
 Book::Book()
 {
 	ISBN = "";
-	bookTitle = "";
-	authorName = "";
+	title = "";
+	author = "";
 	publisher = "";
-	date;
+	month = 0;
+	day = 0;
+	year = 0;
 	quantity = 0;
 	wholesaleCost = 0;
-	retailCost = 0;
+	retailPrice = 0;
 }
 
-Book::Book(string i, string b, string a, string p, int day, int month, int year, int q, double c, double r) : date(day, month, year)
+Book::Book(string i, string b, string a, string p, int m, int d, int y, int q, double c, double r)
 {
 	ISBN = i;
-	bookTitle = b;
-	authorName = a;
+	title = b;
+	author = a;
 	publisher = p;
+	month = m;
+	day = d;
+	year = y;
+	date = to_string(month) + "-" + to_string(day) + "-" + to_string(year);
 	quantity = q;
 	wholesaleCost = c;
-	retailCost = r;
+	retailPrice = r;
 }
 
-
-string Book::toString(int info)
+void Book::setISBN(string num)
 {
-	string temp; //Unfinished.
-	return temp;
+	ISBN = num;
 }
 
-void Book::setISBN(string number)
+void Book::setTitle(string tit)
 {
-	ISBN = number;
+	title = tit;
 }
 
-void Book::setBookTitle(string title)
+void Book::setAuthor(string name)
 {
-	bookTitle = title;
-}
-
-void Book::setAuthorName(string Aname)
-{
-	authorName = Aname;
+	author = name;
 }
 
 void Book::setPublisher(string pub)
 {
 	publisher = pub;
 }
-void Book::setQuantity(int number)
+void Book::setQuantity(int num)
 {
-	quantity = number;
+	quantity = num;
 }
 
-void Book::setWholesaleCost(double price)
+void Book::setWholesaleCost(double cost)
 {
-	wholesaleCost = price;
+	wholesaleCost = cost;
 }
 
-void Book::setRetailCost(double sellBack)
+void Book::setRetailPrice(double price)
 {
-	retailCost = sellBack;
+	retailPrice = price;
 }
 
 void Book::setDay(int d)
 {
-	date.setDay(d);
+	day = d;
 }
 
 void Book::setMonth(int m)
 {
-	date.setMonth(m);
+	month = m;
 }
 
 void Book::setYear(int y)
 {
-	date.setYear(y);
+	year = y;
 }
 
 string Book::getISBN() const
@@ -87,14 +86,14 @@ string Book::getISBN() const
 	return ISBN;
 }
 
-string Book::getBookTitle() const
+string Book::getTitle() const
 {
-	return bookTitle;
+	return title;
 }
 
-string Book::getAuthorName() const
+string Book::getAuthor() const
 {
-	return authorName;
+	return author;
 }
 
 string Book::getPublisher() const
@@ -102,24 +101,24 @@ string Book::getPublisher() const
 	return publisher;
 }
 
+string Book::getDate() const
+{
+	return date;
+}
+
 int Book::getMonth() const
 {
-	return date.getMonth();
+	return month;
 }
 
 int Book::getDay() const
 {
-	return date.getDay();
+	return day;
 }
 
 int Book::getYear() const
 {
-	return date.getYear();
-}
-
-Date Book::getDate() const
-{
-	return date;
+	return year;
 }
 
 int Book::getQuantity() const
@@ -132,7 +131,21 @@ double Book::getWholesaleCost() const
 	return wholesaleCost;
 }
 
-double Book::getRetailCost() const
+double Book::getRetailPrice() const
 {
-	return retailCost;
+	return retailPrice;
+}
+
+string Book::toString()
+{
+	string temp;
+	temp += "ISBN: " + ISBN;
+	temp += "Title: " + title;
+	temp += "Author: " + author;
+	temp += "Publisher: " + publisher;
+	temp += "Date Added: " + date;
+	temp += "Quantity: " + quantity;
+	temp += "Wholesale Cost: " + to_string(wholesaleCost);
+	temp += "Retail Price: " + to_string(retailPrice);
+	return temp;
 }
