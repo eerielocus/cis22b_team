@@ -24,7 +24,7 @@ void BookStore::remove(int index)
 	// In progress.
 }
 
-Book& BookStore::get(int index)
+Book BookStore::get(int index)
 {
 	return bookList[index];
 }

@@ -22,7 +22,7 @@ public:
 
 	void add(Book &);		// Add book to list.
 	void remove(int);		// Remove book from list. (unfinished)
-	Book& get(int);			// Get book from list via index.
+	Book get(int);			// Get book from list via index.
 
 };
 
