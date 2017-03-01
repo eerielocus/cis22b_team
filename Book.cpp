@@ -139,13 +139,13 @@ double Book::getRetailPrice() const
 string Book::toString()
 {
 	string temp;
-	temp += "ISBN: " + ISBN;
-	temp += "Title: " + title;
-	temp += "Author: " + author;
-	temp += "Publisher: " + publisher;
-	temp += "Date Added: " + date;
-	temp += "Quantity: " + quantity;
-	temp += "Wholesale Cost: " + to_string(wholesaleCost);
+	temp += "ISBN: " + ISBN + '\n';
+	temp += "Title: " + title + '\n';
+	temp += "Author: " + author + '\n';
+	temp += "Publisher: " + publisher + '\n';
+	temp += "Date Added: " + date + '\n';
+	temp += "Quantity: " + to_string(quantity) + '\n';
+	temp += "Wholesale Cost: " + to_string(wholesaleCost) + '\n';
 	temp += "Retail Price: " + to_string(retailPrice);
 	return temp;
 }
