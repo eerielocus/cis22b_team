@@ -12,7 +12,7 @@ using namespace std;
 
 int main()
 {
-	BookStore bookMod("BookList.txt");		// Create list and read file and input into array.
+	BookStore bookMod("Booklist.txt");		// Create list and read file and input into array.
 	Inventory invMod(&bookMod);				// Pass created object array reference through the Menu constructor for Inventory.
 
 	invMod.menu();	// Testing add function.
