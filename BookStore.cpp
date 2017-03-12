@@ -21,8 +21,13 @@ void BookStore::menu()
 
 void BookStore::add(Book book)
 {
-	bookList[count] = book;
-	count++;
+	if (count < 25)
+	{
+		bookList[count] = book;
+		count++;
+	}
+	else
+		cout << "Too many books!" << endl;
 }
 
 void BookStore::remove(int index)
