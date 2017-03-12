@@ -3,11 +3,14 @@
 
 #include <string>
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
 class Book
 {
+	friend class BookStore;
+
 private:
 	string ISBN; 
 	string title;
@@ -49,5 +52,8 @@ public:
 	double getRetailPrice() const;
 
 	string toString();
+
+	friend ofstream &operator <<(ofstream &, Book &);
+	friend ifstream &operator >>(ifstream &, Book &);
 };
 #endif

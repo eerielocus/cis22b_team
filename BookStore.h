@@ -20,10 +20,14 @@ public:
 	BookStore();
 	BookStore(string);
 
-	void add(Book &);		// Add book to list.
-	void remove(int);		// Remove book from list. (unfinished)
-	Book get(int);			// Get book from list via index.
+	virtual void menu();
 
+
+	void add(Book);			// Add book to list.
+	void remove(int);		// Remove book from list. (unfinished)
+	Book & get(int);		// Get book from list via index.
+	int getCount();
+	void bookData();		// Input data from file.
 };
 
 #endif

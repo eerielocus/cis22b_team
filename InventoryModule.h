@@ -2,18 +2,20 @@
 #define INVENTORY
 
 #include "Book.h"
-#include "BookStore.h"
+#include "Menu.h"
 #include <string>
 #include <iostream>
 
 using namespace std;
 
-class Inventory : public BookStore
+class Inventory : public Menu
 {
 public:
-	Inventory();
+	Inventory(BookStore*);
 
+	void menu();
 	void addBook();
+	void editBook();
 	void deleteBook();
 };
 

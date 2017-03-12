@@ -1,7 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 
 #include "BookStore.h"
-#include <string>
 
 using namespace std;
 
@@ -9,11 +8,18 @@ BookStore::BookStore() { count = 0; }
 
 BookStore::BookStore(string input) 
 { 
-	file = input; 
 	count = 0;
+	file = input; 
+	bookData();
 }
 
-void BookStore::add(Book &book)
+void BookStore::menu() 
+{ 
+	cout << "\n\nThis ran.\n\n";
+	return; 
+}
+
+void BookStore::add(Book book)
 {
 	bookList[count] = book;
 	count++;
@@ -24,7 +30,26 @@ void BookStore::remove(int index)
 	// In progress.
 }
 
-Book BookStore::get(int index)
+Book & BookStore::get(int index)
 {
 	return bookList[index];
+}
+
+int BookStore::getCount()
+{
+	return count;
+}
+
+void BookStore::bookData()
+{
+	ifstream in;
+	in.open(file, ios::in);
+
+	while (!in.eof())
+	{
+		Book temp;
+		in >> temp;
+		add(temp);
+	}
+	in.close();
 }

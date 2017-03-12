@@ -149,3 +149,48 @@ string Book::toString()
 	temp += "Retail Price: " + to_string(retailPrice);
 	return temp;
 }
+
+ofstream &operator <<(ofstream &out, Book &book)
+{
+	out << book.ISBN << endl;
+	out << book.title << endl;
+	out << book.author << endl;
+	out << book.publisher << endl;
+	out << book.date << endl;
+	out << book.quantity << endl;
+	out << book.wholesaleCost << endl;
+	out << book.retailPrice << endl;
+	return out;
+}
+
+ifstream &operator >>(ifstream &in, Book &book)
+{
+	string tempStr;
+	int tempNum;
+	double tempDbl;
+
+	getline(in, tempStr, '\n');
+	book.ISBN = tempStr;
+	getline(in, tempStr, '\n');
+	book.title = tempStr;
+	getline(in, tempStr, '\n');
+	book.author = tempStr;
+	getline(in, tempStr, '\n');
+	book.publisher = tempStr;
+	getline(in, tempStr, '\n');
+	book.date = tempStr;
+
+	getline(in, tempStr, '\n');
+	tempNum = stoi(tempStr);
+	book.quantity = tempNum;
+
+	getline(in, tempStr, '\n');
+	tempDbl = stod(tempStr);
+	book.wholesaleCost = tempDbl;
+
+	getline(in, tempStr, '\n');
+	tempDbl = stod(tempStr);
+	book.retailPrice = tempDbl;
+
+	return in;
+}
