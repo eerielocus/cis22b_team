@@ -22,12 +22,13 @@ public:
 
 	virtual void menu();
 
-
 	void add(Book);			// Add book to list.
 	void remove(int);		// Remove book from list. (unfinished)
+	void bookData();		// Input data from file.
+
 	Book & get(int);		// Get book from list via index.
 	int getCount();
-	void bookData();		// Input data from file.
+	int findBook(string, int);
 };
 
 #endif

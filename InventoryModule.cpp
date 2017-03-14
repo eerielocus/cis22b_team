@@ -22,4 +22,8 @@ void Inventory::addBook()
 		Book result = store->get(i);	// Use similar pointer to get functions.
 		cout << result.toString() << endl << endl;
 	}
+
+	int search = store->findBook("1231455", 2);
+	Book searchResult = store->get(search);
+	cout << searchResult.toString() << endl << endl;
 }
