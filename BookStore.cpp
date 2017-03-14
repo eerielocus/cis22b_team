@@ -56,46 +56,47 @@ int BookStore::getCount() { return count; }
 int BookStore::findBook(string type, int choice)
 {
 	int result;
-	while (choice > 0 && choice < 4)
+	if (choice == 1)
 	{
-		if (choice == 1)
+		cout << endl << "Searching using book title:" << endl;
+		for (int i = 0; i < count; i++)
 		{
-			cout << endl << "Searching using book title:" << endl;
-			for (int i = 0; i < count; i++)
+			if (!bookList[i].title.compare(type))
 			{
-				if (!bookList[i].title.compare(type))
-				{
-					result = i;
-					return result;
-				}
+				result = i;
+				return result;
 			}
 		}
-			
-		if (choice == 2)
-		{
-			cout << endl << "Searching using book ISBN:" << endl;
-			for (int i = 0; i < count; i++)
-			{
-				if (!bookList[i].ISBN.compare(type))
-				{
-					result = i;
-					return result;
-				}
-			}
-		}
-		if (choice == 3)
-		{
-			cout << endl << "Searching using book author:" << endl;
-			for (int i = 0; i < count; i++)
-			{
-				if (!bookList[i].author.compare(type))
-				{
-					result = i;
-					return result;
-				}
-			}
-		}
+		cout << endl << "No matching title found." << endl;
+		return NULL;
+	}
 
-
+	if (choice == 2)
+	{
+		cout << endl << "Searching using book ISBN:" << endl;
+		for (int i = 0; i < count; i++)
+		{
+			if (!bookList[i].ISBN.compare(type))
+			{
+				result = i;
+				return result;
+			}
+		}
+		cout << endl << "No matching ISBN found." << endl;
+		return NULL;
+	}
+	if (choice == 3)
+	{
+		cout << endl << "Searching using book author:" << endl;
+		for (int i = 0; i < count; i++)
+		{
+			if (!bookList[i].author.compare(type))
+			{
+				result = i;
+				return result;
+			}
+		}
+		cout << endl << "No matching author found." << endl;
+		return NULL;
 	}
 }
