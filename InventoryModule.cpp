@@ -23,7 +23,32 @@ void Inventory::addBook()
 		cout << result.toString() << endl << endl;
 	}
 
-	int search = store->findBook("1231455", 2);
-	Book searchResult = store->get(search);
-	cout << searchResult.toString() << endl << endl;
+	int search = store->findBook("121455", 2);
+	if (search == NULL)
+		cout << "Please search again." << endl;
+	else
+	{
+		Book searchResult = store->get(search);
+		cout << searchResult.toString() << endl << endl;
+	}
+}
+
+void Inventory::editBook()
+{
+	int choice;
+	string term;
+	cout << "Search for the book via: \n1. Book Title\n2. Book ISBN\n3. Book Author" << endl;
+	cin >> choice;
+	
+	if (choice == 1)
+	{
+		cout << "Please enter title to search: ";
+		cin >> term;
+		store->findBook(term, choice);
+	}
+}
+
+void Inventory::deleteBook()
+{
+
 }
