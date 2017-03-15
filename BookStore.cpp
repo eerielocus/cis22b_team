@@ -19,15 +19,18 @@ void BookStore::menu()
 	return; 
 }
 
+// Simple void function to make strings lowercase.
 void toLower(basic_string<char>& s)
 {
 	for (basic_string<char>::iterator p = s.begin(); p != s.end(); ++p) 
 		*p = tolower(*p);
 }
 
+// Adds passed Book object if there is room. If count is greater than allowed size,
+// display error message too many books.
 void BookStore::add(Book book)
 {
-	if (count < 25)
+	if (count < size)
 	{
 		bookList[count] = book;
 		count++;
@@ -50,6 +53,7 @@ void BookStore::remove(int index)
 		bookList[k] = Book();
 }
 
+// Takes input file data and inserts into appropriate attributes of Book.
 void BookStore::bookData()
 {
 	ifstream in;
@@ -70,10 +74,13 @@ int BookStore::getCount() { return count; }
 
 int BookStore::getSize() const { return size; }
 
+// Full search term book finder. Pass search term string and choice of book attribute.
+// Returns an int that is the index of the book found.
+// Throws a no match found exception.
 int BookStore::findBook(string type, int choice)
 {
 	int result;
-	if (choice == 1)
+	if (choice == 1)		// Search by title.
 	{
 		cout << endl << "Searching using book title:" << endl;
 		for (int i = 0; i < count; i++)
@@ -91,7 +98,7 @@ int BookStore::findBook(string type, int choice)
 		return NULL;
 	}
 
-	if (choice == 2)
+	if (choice == 2)		// Search by ISBN.
 	{
 		cout << endl << "Searching using book ISBN:" << endl;
 		for (int i = 0; i < count; i++)
@@ -109,7 +116,7 @@ int BookStore::findBook(string type, int choice)
 		return NULL;
 	}
 
-	if (choice == 3)
+	if (choice == 3)		// Search by author.
 	{
 		cout << endl << "Searching using book author:" << endl;
 		for (int i = 0; i < count; i++)
@@ -129,11 +136,14 @@ int BookStore::findBook(string type, int choice)
 	return NULL;
 }
 
+// Partial search term book finder. Pass search term string, choice of book attribute,
+// and an array to store indexes that match the search term. 
+// Returns an int that is the counter to use for the array holding the stored indexes.
 int BookStore::lookUp(string type, int choice, int searched[])
 {
-	int counter = 0;
+	int counter = 0;		// Counter to keep track of how many 'hits' were found to allow for proper display.
 
-	if (choice == 1)
+	if (choice == 1)		// Search by title.
 	{
 		cout << endl << "Searching using book title:" << endl;
 		for (int i = 0; i < count; i++)
@@ -150,7 +160,7 @@ int BookStore::lookUp(string type, int choice, int searched[])
 		return counter;
 	}
 
-	if (choice == 2)
+	if (choice == 2)		// Search by ISBN.
 	{
 		cout << endl << "Searching using book ISBN:" << endl;
 		for (int i = 0; i < count; i++)
@@ -165,7 +175,7 @@ int BookStore::lookUp(string type, int choice, int searched[])
 		return counter;
 	}
 
-	if (choice == 3)
+	if (choice == 3)		// Search by author.
 	{
 		cout << endl << "Searching using book author:" << endl;
 		for (int i = 0; i < count; i++)
