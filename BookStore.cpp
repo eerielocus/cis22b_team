@@ -32,7 +32,16 @@ void BookStore::add(Book book)
 
 void BookStore::remove(int index)
 {
-	// In progress.
+	if (index == (size - 1))
+		bookList[index] = Book();
+
+	for (int i = index; i < (size - 1); i++)
+		bookList[i] = bookList[i + 1];
+
+	count--;
+
+	for (int k = count; k < size; k++)
+		bookList[k] = Book();
 }
 
 void BookStore::bookData()
@@ -63,11 +72,14 @@ int BookStore::findBook(string type, int choice)
 		{
 			if (!bookList[i].title.compare(type))
 			{
+				cout << "Found!" << endl << endl;
 				result = i;
 				return result;
 			}
 		}
-		cout << endl << "No matching title found." << endl;
+
+		throw "No matching item found.";
+		system("pause");
 		return NULL;
 	}
 
@@ -78,11 +90,14 @@ int BookStore::findBook(string type, int choice)
 		{
 			if (!bookList[i].ISBN.compare(type))
 			{
+				cout << "Found!" << endl << endl;
 				result = i;
 				return result;
 			}
 		}
-		cout << endl << "No matching ISBN found." << endl;
+
+		throw "No matching item found.";
+		system("pause");
 		return NULL;
 	}
 	if (choice == 3)
@@ -92,11 +107,15 @@ int BookStore::findBook(string type, int choice)
 		{
 			if (!bookList[i].author.compare(type))
 			{
+				cout << "Found!" << endl << endl;
 				result = i;
 				return result;
 			}
 		}
-		cout << endl << "No matching author found." << endl;
+
+		throw "No matching item found.";
+		system("pause");
 		return NULL;
 	}
+	return NULL;
 }
