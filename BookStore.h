@@ -3,6 +3,9 @@
 
 #include "Book.h"
 #include <string>
+#include <cctype>
+#include <cwctype>
+#include <stdexcept>
 
 using namespace std;
 
@@ -26,9 +29,13 @@ public:
 	void remove(int);		// Remove book from list. (unfinished)
 	void bookData();		// Input data from file.
 
+	template <class T>
+	void setData(T);
+
 	Book & get(int);		// Get book from list via index.
 	int getCount();
 	int findBook(string, int);
+	void lookUp(string, int);
 };
 
 #endif

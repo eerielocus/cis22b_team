@@ -14,6 +14,7 @@ public:
 	Inventory(BookStore*);
 
 	void menu();
+	void lookUpBook();
 	void addBook();
 	void editBook();
 	void deleteBook();

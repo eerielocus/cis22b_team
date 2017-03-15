@@ -19,6 +19,12 @@ void BookStore::menu()
 	return; 
 }
 
+void toLower(basic_string<char>& s)
+{
+	for (basic_string<char>::iterator p = s.begin(); p != s.end(); ++p) 
+		*p = tolower(*p);
+}
+
 void BookStore::add(Book book)
 {
 	if (count < 25)
@@ -100,6 +106,7 @@ int BookStore::findBook(string type, int choice)
 		system("pause");
 		return NULL;
 	}
+
 	if (choice == 3)
 	{
 		cout << endl << "Searching using book author:" << endl;
@@ -118,4 +125,67 @@ int BookStore::findBook(string type, int choice)
 		return NULL;
 	}
 	return NULL;
+}
+
+void BookStore::lookUp(string type, int choice)
+{
+	int storage[size], counter = 0;
+
+	if (choice == 1)
+	{
+		cout << endl << "Searching using book title:" << endl;
+		for (int i = 0; i < count; i++)
+		{
+			string temp = bookList[i].title;
+			toLower(temp);
+			toLower(type);
+			if (type.find(temp.c_str(), 0, type.size()) == 0)
+			{
+				storage[counter] = i;
+				counter++;
+			}
+		}
+	}
+
+	if (choice == 2)
+	{
+		cout << endl << "Searching using book ISBN:" << endl;
+		for (int i = 0; i < count; i++)
+		{
+			string temp = bookList[i].ISBN;
+			if (type.find(temp.c_str(), 0, type.size()) == 0)
+			{
+				storage[counter] = i;
+				counter++;
+			}
+		}
+	}
+
+	if (choice == 3)
+	{
+		cout << endl << "Searching using book author:" << endl;
+		for (int i = 0; i < count; i++)
+		{
+			string temp = bookList[i].author;
+			toLower(temp);
+			toLower(type);
+			if (type.find(temp.c_str(), 0, type.size()) == 0)
+			{
+				storage[counter] = i;
+				counter++;
+			}
+		}
+	}
+
+	if (counter == 0)
+		throw "Unable to find books.";
+	else
+	{
+		for (int j = 0; j < counter; j++)
+		{
+			int t = storage[j];
+			cout << bookList[t].toString() << endl << endl;
+		}
+	}
+	system("pause");
 }
