@@ -10,6 +10,9 @@ using namespace std;
 
 class Inventory : public Menu
 {
+protected:
+	const static int sizeI = 25;
+
 public:
 	Inventory(BookStore*);
 

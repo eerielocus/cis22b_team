@@ -34,8 +34,9 @@ public:
 
 	Book & get(int);		// Get book from list via index.
 	int getCount();
+	int getSize() const;
 	int findBook(string, int);
-	void lookUp(string, int);
+	int lookUp(string, int, int[]);
 };
 
 #endif

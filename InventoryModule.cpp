@@ -11,6 +11,7 @@ void Inventory::menu()
 	int choice;
 	bool exit = false;
 
+	system("cls");
 	cout << "Inventory Menu" << endl << endl;
 	cout << "Select option below:" << endl;
 	cout << "1. Look up book" << endl;
@@ -50,7 +51,7 @@ void Inventory::menu()
 void Inventory::lookUpBook()
 {
 	string term, yesno;
-	int choice;
+	int choice, searched[sizeI], counter = 0;
 	bool exit = false;
 
 	system("cls");
@@ -58,6 +59,7 @@ void Inventory::lookUpBook()
 	cout << "1. Title" << endl;
 	cout << "2. ISBN" << endl;
 	cout << "3. Author" << endl;
+	cout << "4. Exit to Inventory menu" << endl;
 	cout << "Please enter choice: ";
 	cin >> choice;
 	cin.clear();
@@ -67,7 +69,7 @@ void Inventory::lookUpBook()
 	{
 		while (exit == false)
 		{
-			if (choice > 0 && choice < 4)
+			if (choice > 0 && choice < 5)
 			{
 				system("cls");
 				cout << "[You may type in partial search terms.]" << endl;
@@ -77,22 +79,24 @@ void Inventory::lookUpBook()
 					cout << "Please enter title to search: ";
 					getline(cin, term);
 					cin.clear();
-					store->lookUp(term, choice);
+					counter = store->lookUp(term, choice, searched);
 					break;
 
 				case 2:
 					cout << "Please enter ISBN to search: ";
 					getline(cin, term);
 					cin.clear();
-					store->lookUp(term, choice);
+					counter = store->lookUp(term, choice, searched);
 					break;
 
 				case 3:
 					cout << "Please enter author to search: ";
 					getline(cin, term);
 					cin.clear();
-					store->lookUp(term, choice);
+					counter = store->lookUp(term, choice, searched);
 					break;
+				case 4:
+					menu();
 				}
 			}
 			else
@@ -101,6 +105,26 @@ void Inventory::lookUpBook()
 				cin.clear();
 				cin.ignore(1000, '\n');
 				system("pause");
+				lookUpBook();
+			}
+
+			if (counter == 0)
+				throw "Unable to find books.";
+			else
+			{
+				for (int j = 0; j < counter; j++)
+				{
+					int t = searched[j];
+					cout << store->get(t).toString() << endl << endl;
+				}
+			}
+
+			cout << "Would you like to continue? ";
+			cin >> yesno;
+
+			if (yesno == "N" || yesno == "n")
+			{
+				exit = true;
 				lookUpBook();
 			}
 		}
@@ -112,15 +136,6 @@ void Inventory::lookUpBook()
 		cin.ignore(1000, '\n');
 		system("pause");
 		lookUpBook();
-	}
-
-	cout << "Would you like to continue? ";
-	cin >> yesno;
-
-	if (yesno == "N" || yesno == "n")
-	{
-		exit = true;
-		editBook();
 	}
 }
 
@@ -151,6 +166,8 @@ void Inventory::editBook()
 	cout << "1. Title" << endl;
 	cout << "2. ISBN" << endl;
 	cout << "3. Author" << endl;
+	cout << "4. Exit to Inventory menu" << endl;
+	cout << "Please enter your choice: ";
 	cin >> choice;
 	cin.clear();
 	cin.ignore();
@@ -159,7 +176,7 @@ void Inventory::editBook()
 	{
 		while (searchResult == NULL)
 		{
-			if (choice > 0 && choice < 4)
+			if (choice > 0 && choice < 5)
 			{
 				system("cls");
 				switch (choice)
@@ -184,6 +201,8 @@ void Inventory::editBook()
 					cin.clear();
 					searchResult = store->findBook(term, choice);
 					break;
+				case 4:
+					menu();
 				}
 			}
 			else
@@ -217,6 +236,7 @@ void Inventory::editBook()
 		cout << "6. Wholesale Cost" << endl;
 		cout << "7. Retail Price" << endl;
 		cout << "8. Return to Inventory Menu" << endl;
+		cout << "Please enter your choice: ";
 		cin >> choice;
 		cin.clear();
 

@@ -68,6 +68,8 @@ Book & BookStore::get(int index) { return bookList[index]; }
 
 int BookStore::getCount() { return count; }
 
+int BookStore::getSize() const { return size; }
+
 int BookStore::findBook(string type, int choice)
 {
 	int result;
@@ -127,9 +129,9 @@ int BookStore::findBook(string type, int choice)
 	return NULL;
 }
 
-void BookStore::lookUp(string type, int choice)
+int BookStore::lookUp(string type, int choice, int searched[])
 {
-	int storage[size], counter = 0;
+	int counter = 0;
 
 	if (choice == 1)
 	{
@@ -141,10 +143,11 @@ void BookStore::lookUp(string type, int choice)
 			toLower(type);
 			if (type.find(temp.c_str(), 0, type.size()) == 0)
 			{
-				storage[counter] = i;
+				searched[counter] = i;
 				counter++;
 			}
 		}
+		return counter;
 	}
 
 	if (choice == 2)
@@ -155,10 +158,11 @@ void BookStore::lookUp(string type, int choice)
 			string temp = bookList[i].ISBN;
 			if (type.find(temp.c_str(), 0, type.size()) == 0)
 			{
-				storage[counter] = i;
+				searched[counter] = i;
 				counter++;
 			}
 		}
+		return counter;
 	}
 
 	if (choice == 3)
@@ -171,21 +175,11 @@ void BookStore::lookUp(string type, int choice)
 			toLower(type);
 			if (type.find(temp.c_str(), 0, type.size()) == 0)
 			{
-				storage[counter] = i;
+				searched[counter] = i;
 				counter++;
 			}
 		}
+		return counter;
 	}
-
-	if (counter == 0)
-		throw "Unable to find books.";
-	else
-	{
-		for (int j = 0; j < counter; j++)
-		{
-			int t = storage[j];
-			cout << bookList[t].toString() << endl << endl;
-		}
-	}
-	system("pause");
+	return counter;
 }
