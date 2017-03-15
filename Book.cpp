@@ -81,6 +81,11 @@ void Book::setYear(int y)
 	year = y;
 }
 
+void Book::setDate(int m, int d, int y)
+{
+	date = to_string(m) + "-" + to_string(d) + "-" + to_string(y);
+}
+
 string Book::getISBN() const
 {
 	return ISBN;

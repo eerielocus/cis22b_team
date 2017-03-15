@@ -38,6 +38,7 @@ public:
 	void setDay(int);
 	void setMonth(int);
 	void setYear(int);
+	void setDate(int, int, int);
 
 	string getISBN() const;
 	string getTitle() const;
