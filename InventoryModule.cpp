@@ -141,18 +141,8 @@ void Inventory::lookUpBook()
 
 void Inventory::addBook()
 {
-	
-	int search = store->findBook("Lord of the Flies", 1);
-	if (search == NULL)
-		cout << "Please search again." << endl;
-	else
-	{
-		Book &searchResult = store->get(search);
-		cout << "Changing." << endl << endl;
-		searchResult.setDay(12);
-		cout << searchResult.getYear() << endl << endl;
-		cout << searchResult.toString() << endl << endl;
-	}
+	cout << "Not done yet." << endl;
+	menu();
 }
 
 void Inventory::editBook()
@@ -327,12 +317,6 @@ void Inventory::editBook()
 
 void Inventory::deleteBook()
 {
-	store->remove(1);
-	store->remove(24);
-	cout << store->getCount() << endl << endl;
-	for (int i = 0; i < 25; i++)	//Temporary print test.
-	{
-		Book result = store->get(i);	// Use similar pointer to get functions.
-		cout << result.toString() << endl << endl;
-	}
+	cout << "Not done yet." << endl;
+	menu();
 }
