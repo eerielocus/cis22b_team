@@ -4,44 +4,51 @@
 
 using namespace std;
 
-Inventory::Inventory(BookStore *store) : Menu(store) {}		// Constructor utilize referenced BookStore class and pass to Menu.
+Inventory::Inventory(BookStore *store) : Menu(store) { }		// Constructor utilize referenced BookStore class and pass to Menu.
 
 void Inventory::menu()
 {
 	int choice;
 	bool exit = false;
 
+	while (exit == false)
+	{
 	system("cls");
-	cout << "Inventory Menu" << endl << endl;
+	cout << "{ INVENTORY MENU }" << endl << endl;
 	cout << "Select option below:" << endl;
 	cout << "1. Look up book" << endl;
 	cout << "2. Add book" << endl;
 	cout << "3. Remove book" << endl;
 	cout << "4. Edit book" << endl;
-	cout << "5. Return to main menu" << endl;
+	cout << "5. Return to main menu" << endl << endl;
 	cout << "Please enter in choice: ";
 	cin >> choice;
+	cin.clear();
+	cin.ignore();
 	
-	while (exit == false)
-	{
-		if (choice > 0 && choice < 5)
+	
+		if (choice > 0 && choice < 6)
 		{
-			system("cls");
 			switch (choice)
 			{
 			case 1:
 				lookUpBook();
 				break;
+
 			case 2:
 				addBook();
 				break;
+
 			case 3:
 				deleteBook();
 				break;
+
 			case 4:
 				editBook();
 				break;
+
 			case 5:
+				exit = true;
 				break;
 			}
 		}
@@ -54,28 +61,29 @@ void Inventory::lookUpBook()
 	int choice, searched[sizeI], counter = 0;
 	bool exit = false;
 
-	system("cls");
-	cout << "Search for a book via:" << endl;
-	cout << "1. Title" << endl;
-	cout << "2. ISBN" << endl;
-	cout << "3. Author" << endl;
-	cout << "4. Exit to Inventory menu" << endl;
-	cout << "Please enter choice: ";
-	cin >> choice;
-	cin.clear();
-	cin.ignore();
-
 	try
 	{
 		while (exit == false)
 		{
+			system("cls");
+			cout << "{ LOOK UP BOOK }" << endl << endl;
+			cout << "Search for a book via:" << endl;
+			cout << "1. Title" << endl;
+			cout << "2. ISBN" << endl;
+			cout << "3. Author" << endl;
+			cout << "4. Exit to Inventory menu" << endl << endl;
+			cout << "Please enter choice: ";
+			cin >> choice;
+			cin.clear();
+			cin.ignore();
+
 			if (choice > 0 && choice < 5)
 			{
 				system("cls");
-				cout << "[You may type in partial search terms.]" << endl;
 				switch (choice)
 				{
 				case 1:
+					cout << "{ May enter partial search terms. }" << endl;
 					cout << "Please enter title to search: ";
 					getline(cin, term);
 					cin.clear();
@@ -83,6 +91,7 @@ void Inventory::lookUpBook()
 					break;
 
 				case 2:
+					cout << "{ May enter partial search terms. }" << endl;
 					cout << "Please enter ISBN to search: ";
 					getline(cin, term);
 					cin.clear();
@@ -90,13 +99,128 @@ void Inventory::lookUpBook()
 					break;
 
 				case 3:
+					cout << "{ May enter partial search terms. }" << endl;
 					cout << "Please enter author to search: ";
 					getline(cin, term);
 					cin.clear();
 					counter = store->lookUp(term, choice, searched);
 					break;
+
 				case 4:
-					menu();
+					cout << "Exiting." << endl;
+					system("pause");
+					exit = true;
+					break;
+				}
+			}
+			else
+			{
+				cout << "Invalid option selected. Please try again." << endl;
+				cin.clear();
+				system("pause");
+				break;
+			}
+
+			if (choice != 4)
+			{
+				system("cls");
+				cout << "Search results: " << endl;
+				if (counter == 0)
+					throw "Unable to find books.";
+				else
+				{
+					for (int j = 0; j < counter; j++)
+					{
+						int t = searched[j];
+						cout << store->get(t).toString() << endl << endl;
+					}
+				}
+
+				cout << "Would you like to continue? ";
+				cin >> yesno;
+
+				if (yesno == "N" || yesno == "n")
+				{
+					exit = true;
+					break;
+				}
+				else if (yesno == "Y" || yesno == "y")
+					continue;
+				else
+				{
+					cout << "Invalid response. Returning to menu." << endl;
+					system("pause");
+					exit = true;
+					break;
+				}
+			}
+		}
+	}
+	catch (char* error)
+	{
+		cout << error << endl << endl;
+		cin.clear();
+		system("pause");
+		return;
+	}
+	
+}
+
+void Inventory::addBook()
+{
+	int quant, choice = 0;
+	double cost, price;
+	string tit, isbn, auth, pub, yesno;
+	bool exit = false;
+
+	try
+	{
+		while (exit == false)
+		{
+			system("cls");
+			cout << "{ ADD BOOK }" << endl << endl;
+			cout << "1. Add book" << endl;
+			cout << "2. Exit to Inventory menu" << endl << endl;
+			cout << "Please enter your choice: ";
+			cin >> choice;
+			cin.clear();
+			cin.ignore();
+
+			if (choice > 0 && choice < 3)
+			{
+				system("cls");
+				switch (choice)
+				{
+				case 1:
+					cout << "For the new book:" << endl;
+					cout << "Please enter title: ";
+					cin.ignore();
+					getline(cin, tit);
+					cin.clear();
+					cout << "Please enter ISBN: ";
+					getline(cin, isbn);
+					cin.clear();
+					cout << "Please enter author: ";
+					getline(cin, auth);
+					cin.clear();
+					cout << "Please enter publisher: ";
+					getline(cin, pub);
+					cin.clear();
+					cout << "Please enter quantity: ";
+					cin >> quant;
+					cin.clear();
+					cout << "Please enter wholesale cost: ";
+					cin >> cost;
+					cin.clear();
+					cout << "Please enter retail price: ";
+					cin >> price;
+					cin.clear();
+					cin.ignore();
+					break;
+
+				case 2:
+					exit = true;
+					break;
 				}
 			}
 			else
@@ -105,27 +229,32 @@ void Inventory::lookUpBook()
 				cin.clear();
 				cin.ignore(1000, '\n');
 				system("pause");
-				lookUpBook();
+				addBook();
 			}
 
-			if (counter == 0)
-				throw "Unable to find books.";
-			else
+			if (choice != 2)
 			{
-				for (int j = 0; j < counter; j++)
+				Book newBook(isbn, tit, auth, pub, 10, 10, 1990, quant, cost, price);
+				if (store->add(newBook))
+					cout << "Book successfully added!" << endl;
+
+				cout << "Would you like to continue? ";
+				cin >> yesno;
+
+				if (yesno == "N" || yesno == "n")
 				{
-					int t = searched[j];
-					cout << store->get(t).toString() << endl << endl;
+					exit = true;
+					break;
 				}
-			}
-
-			cout << "Would you like to continue? ";
-			cin >> yesno;
-
-			if (yesno == "N" || yesno == "n")
-			{
-				exit = true;
-				lookUpBook();
+				else if (yesno == "Y" || yesno == "y")
+					continue;
+				else
+				{
+					cout << "Invalid response. Returning to menu." << endl;
+					exit = true;
+					system("pause");
+					break;
+				}
 			}
 		}
 	}
@@ -135,28 +264,24 @@ void Inventory::lookUpBook()
 		cin.clear();
 		cin.ignore(1000, '\n');
 		system("pause");
-		lookUpBook();
+		addBook();
 	}
-}
-
-void Inventory::addBook()
-{
-	cout << "Not done yet." << endl;
-	menu();
 }
 
 void Inventory::editBook()
 {
-	int choice, attr, searchResult = NULL;
+	double price, tempDbl;
+	int choice, quant, month, day, year, tempInt, searchResult;
 	string term, yesno, tempStr;
-	bool exit = false;
+	bool exit = false, found = false;
 
 	system("cls");
+	cout << "{ EDIT BOOK }" << endl << endl;
 	cout << "Search for a book to edit:" << endl;
 	cout << "1. Title" << endl;
 	cout << "2. ISBN" << endl;
 	cout << "3. Author" << endl;
-	cout << "4. Exit to Inventory menu" << endl;
+	cout << "4. Exit to Inventory menu" << endl << endl;
 	cout << "Please enter your choice: ";
 	cin >> choice;
 	cin.clear();
@@ -164,7 +289,7 @@ void Inventory::editBook()
 
 	try
 	{
-		while (searchResult == NULL)
+		while (!found)
 		{
 			if (choice > 0 && choice < 5)
 			{
@@ -176,6 +301,7 @@ void Inventory::editBook()
 					getline(cin, term);
 					cin.clear();
 					searchResult = store->findBook(term, choice);
+					found = true;
 					break;
 
 				case 2:
@@ -183,6 +309,7 @@ void Inventory::editBook()
 					getline(cin, term);
 					cin.clear();
 					searchResult = store->findBook(term, choice);
+					found = true;
 					break;
 
 				case 3:
@@ -190,9 +317,13 @@ void Inventory::editBook()
 					getline(cin, term);
 					cin.clear();
 					searchResult = store->findBook(term, choice);
+					found = true;
 					break;
+
 				case 4:
-					menu();
+					found = true;
+					exit = true;
+					break;
 				}
 			}
 			else
@@ -201,37 +332,39 @@ void Inventory::editBook()
 				cin.clear();
 				cin.ignore(1000, '\n');
 				system("pause");
-				editBook();
+				break;
 			}
 		}
 	}
 	catch (char* error)
 	{
 		cout << error << endl << endl;
+		found = false;
 		cin.clear();
-		cin.ignore(1000, '\n');
 		system("pause");
-		editBook();
 	}
 
-	while (exit == false)
+	while (!exit && found)
 	{
+		Book &temp = store->get(searchResult);
+
 		system("cls");
+		cout << "-----" << endl << temp.toString() << endl << "-----" << endl;
 		cout << "Select attribute to edit:" << endl;
 		cout << "1. Title" << endl;
 		cout << "2. ISBN" << endl;
 		cout << "3. Author" << endl;
 		cout << "4. Publisher" << endl;
 		cout << "5. Date" << endl;
-		cout << "6. Wholesale Cost" << endl;
-		cout << "7. Retail Price" << endl;
-		cout << "8. Return to Inventory Menu" << endl;
+		cout << "6. Quantity" << endl;
+		cout << "7. Wholesale Cost" << endl;
+		cout << "8. Retail Price" << endl;
+		cout << "9. Return to previous menu" << endl << endl;
 		cout << "Please enter your choice: ";
 		cin >> choice;
 		cin.clear();
 
-		Book &temp = store->get(searchResult);
-		if (choice > 0 && choice < 8)
+		if (choice > 0 && choice < 9)
 		{
 			system("cls");
 			switch (choice)
@@ -247,6 +380,7 @@ void Inventory::editBook()
 
 				cout << "Successfully changed: " << tempStr << " to: " << temp.getTitle() << endl << endl;
 				break;
+
 			case 2:
 				cout << "Please enter new ISBN: ";
 				cin.ignore();
@@ -258,6 +392,7 @@ void Inventory::editBook()
 
 				cout << "Successfully changed: " << tempStr << " to: " << temp.getISBN() << endl << endl;
 				break;
+
 			case 3:
 				cout << "Please enter new author: ";
 				cin.ignore();
@@ -269,6 +404,7 @@ void Inventory::editBook()
 
 				cout << "Successfully changed: " << tempStr << " to: " << temp.getAuthor() << endl << endl;
 				break;
+
 			case 4:
 				cout << "Please enter new publisher: ";
 				cin.ignore();
@@ -280,20 +416,67 @@ void Inventory::editBook()
 
 				cout << "Successfully changed: " << tempStr << " to: " << temp.getPublisher() << endl << endl;
 				break;
-			case 5:
-				int input[3];
-				cout << "Please enter new date as follows (MM/DD/YYYY) seperated with '/': ";
-				cin.ignore();
-				getline(cin, term);
-				
 
+			case 5:
+				cout << "Please enter new month (MM): ";
+				cin.ignore();
+				cin >> month;
+				cout << "Please enter new day (DD): ";
+				cin.ignore();
+				cin >> day;
+				cout << "Please enter new year (YYYY): ";
+				cin.ignore();
+				cin >> year;
 
 				cin.clear();
 
 				tempStr = temp.getDate();
-				temp.setDate(input[0], input[1], input[2]);
+				temp.setDate(month, day, year);
+				temp.setMonth(month);
+				temp.setDay(day);
+				temp.setYear(year);
 
 				cout << "Successfully changed: " << tempStr << " to: " << temp.getDate() << endl << endl;
+				break;
+				
+			case 6:
+				cout << "Please enter new quantity: ";
+				cin.ignore();
+				cin >> quant;
+				cin.clear();
+
+				tempInt = temp.getQuantity();
+				temp.setQuantity(quant);
+
+				cout << "Successfully changed: " << tempInt << " to: " << temp.getQuantity() << endl << endl;
+				break;
+
+			case 7:
+				cout << "Please enter new wholesale cost: ";
+				cin.ignore();
+				cin >> price;
+				cin.clear();
+
+				tempDbl = temp.getWholesaleCost();
+				temp.setWholesaleCost(price);
+
+				cout << "Successfully changed: " << tempDbl << " to: " << temp.getWholesaleCost() << endl << endl;
+				break;
+
+			case 8:
+				cout << "Please enter new retail price: ";
+				cin.ignore();
+				cin >> price;
+				cin.clear();
+
+				tempDbl = temp.getRetailPrice();
+				temp.setRetailPrice(price);
+
+				cout << "Successfully changed: " << tempDbl << " to: " << temp.getRetailPrice() << endl << endl;
+				break;
+
+			case 9:
+				exit = true;
 				break;
 			}
 		}
@@ -301,16 +484,22 @@ void Inventory::editBook()
 		{
 			cout << "Invalid option selected. Please try again." << endl;
 			cin.clear();
-			cin.ignore(1000, '\n');
+			system("pause");
+			continue;
 		}
 
 		cout << "Would you like to continue? ";
 		cin >> yesno;
 
 		if (yesno == "N" || yesno == "n")
-		{
 			exit = true;
-			editBook();
+		else if (yesno == "Y" || yesno == "y")
+			continue;
+		else
+		{
+			cout << "Invalid response. Returning to menu." << endl;
+			exit = true;
+			system("pause");
 		}
 	}
 }

@@ -26,7 +26,7 @@ Book::Book(string i, string b, string a, string p, int m, int d, int y, int q, d
 	month = m;
 	day = d;
 	year = y;
-	date = to_string(month) + "-" + to_string(day) + "-" + to_string(year);
+	date = to_string(month) + "/" + to_string(day) + "/" + to_string(year);
 	quantity = q;
 	wholesaleCost = c;
 	retailPrice = r;
@@ -83,7 +83,7 @@ void Book::setYear(int y)
 
 void Book::setDate(int m, int d, int y)
 {
-	date = to_string(m) + "-" + to_string(d) + "-" + to_string(y);
+	date = to_string(m) + "/" + to_string(d) + "/" + to_string(y);
 }
 
 string Book::getISBN() const
@@ -170,7 +170,7 @@ ofstream &operator <<(ofstream &out, Book &book)
 
 ifstream &operator >>(ifstream &in, Book &book)
 {
-	string tempStr;
+	string tempStr, tempCo;
 	int tempNum;
 	double tempDbl;
 
@@ -184,6 +184,14 @@ ifstream &operator >>(ifstream &in, Book &book)
 	book.publisher = tempStr;
 	getline(in, tempStr, '\n');
 	book.date = tempStr;
+
+	tempCo = tempStr.substr(0, tempStr.find("/", 0));
+	tempStr = tempStr.substr(tempStr.find("/", 0) + 1, tempStr.length());
+	book.month = stoi(tempCo);
+	tempCo = tempStr.substr(0, tempStr.find("/", 0));
+	tempStr = tempStr.substr(tempStr.find("/", 0) + 1, tempStr.length());
+	book.day = stoi(tempCo);
+	book.year = stoi(tempStr);
 
 	getline(in, tempStr, '\n');
 	tempNum = stoi(tempStr);

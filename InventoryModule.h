@@ -11,7 +11,7 @@ using namespace std;
 class Inventory : public Menu
 {
 protected:
-	const static int sizeI = 25;
+	const static int sizeI = 30;
 
 public:
 	Inventory(BookStore*);
