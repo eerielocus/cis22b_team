@@ -14,7 +14,7 @@ class BookStore
 private:
 	string file;
 	int count;
-	const static int size = 25;
+	const static int size = 30;
 
 protected:
 	Book bookList[size];
@@ -25,7 +25,7 @@ public:
 
 	virtual void menu();
 
-	void add(Book);			// Add book to list.
+	bool add(Book);			// Add book to list.
 	void remove(int);		// Remove book from list. (unfinished)
 	void bookData();		// Input data from file.
 

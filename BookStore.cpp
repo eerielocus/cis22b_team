@@ -28,15 +28,17 @@ void toLower(basic_string<char>& s)
 
 // Adds passed Book object if there is room. If count is greater than allowed size,
 // display error message too many books.
-void BookStore::add(Book book)
+bool BookStore::add(Book book)
 {
 	if (count < size)
 	{
 		bookList[count] = book;
 		count++;
+		return true;
 	}
 	else
 		cout << "Too many books!" << endl;
+	return false;
 }
 
 void BookStore::remove(int index)

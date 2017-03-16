@@ -194,7 +194,6 @@ void Inventory::addBook()
 				case 1:
 					cout << "For the new book:" << endl;
 					cout << "Please enter title: ";
-					cin.ignore();
 					getline(cin, tit);
 					cin.clear();
 					cout << "Please enter ISBN: ";
@@ -364,7 +363,7 @@ void Inventory::editBook()
 		cin >> choice;
 		cin.clear();
 
-		if (choice > 0 && choice < 9)
+		if (choice > 0 && choice < 10)
 		{
 			system("cls");
 			switch (choice)
@@ -488,18 +487,24 @@ void Inventory::editBook()
 			continue;
 		}
 
-		cout << "Would you like to continue? ";
-		cin >> yesno;
-
-		if (yesno == "N" || yesno == "n")
-			exit = true;
-		else if (yesno == "Y" || yesno == "y")
-			continue;
-		else
+		if (!exit)
 		{
-			cout << "Invalid response. Returning to menu." << endl;
-			exit = true;
-			system("pause");
+			cout << "Would you like to continue? ";
+			cin >> yesno;
+
+			if (yesno == "N" || yesno == "n")
+			{
+				exit = true;
+				break;
+			}
+			else if (yesno == "Y" || yesno == "y")
+				continue;
+			else
+			{
+				cout << "Invalid response. Returning to menu." << endl;
+				exit = true;
+				system("pause");
+			}
 		}
 	}
 }
