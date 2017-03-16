@@ -4,6 +4,8 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <iomanip>
+#include <sstream>
 
 using namespace std;
 
@@ -27,7 +29,10 @@ private:
 public:
 	Book();
 	Book(string, string, string, string, int, int, int, int, double, double);
-    
+
+    template <class T>
+	string to_string_prec(const T);
+
 	void setISBN(string);
 	void setTitle(string);
 	void setAuthor(string);

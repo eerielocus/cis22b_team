@@ -511,6 +511,76 @@ void Inventory::editBook()
 
 void Inventory::deleteBook()
 {
-	cout << "Not done yet." << endl;
-	menu();
+	int choice, searchResult;
+	string term;
+	bool exit = false, found = false;
+
+	system("cls");
+	cout << "{ REMOVE BOOK }" << endl << endl;
+	cout << "Search for a book to remove:" << endl;
+	cout << "1. Title" << endl;
+	cout << "2. ISBN" << endl;
+	cout << "3. Author" << endl;
+	cout << "4. Exit to Inventory menu" << endl << endl;
+	cout << "Please enter your choice: ";
+	cin >> choice;
+	cin.clear();
+	cin.ignore();
+
+	try
+	{
+		while (!found)
+		{
+			if (choice > 0 && choice < 5)
+			{
+				system("cls");
+				switch (choice)
+				{
+				case 1:
+					cout << "Please enter title to search: ";
+					getline(cin, term);
+					cin.clear();
+					searchResult = store->findBook(term, choice);
+					found = true;
+					break;
+
+				case 2:
+					cout << "Please enter ISBN to search: ";
+					getline(cin, term);
+					cin.clear();
+					searchResult = store->findBook(term, choice);
+					found = true;
+					break;
+
+				case 3:
+					cout << "Please enter author to search: ";
+					getline(cin, term);
+					cin.clear();
+					searchResult = store->findBook(term, choice);
+					found = true;
+					break;
+
+				case 4:
+					found = true;
+					exit = true;
+					break;
+				}
+			}
+			else
+			{
+				cout << "Invalid option selected. Please try again." << endl;
+				cin.clear();
+				cin.ignore(1000, '\n');
+				system("pause");
+				break;
+			}
+		}
+	}
+	catch (char* error)
+	{
+		cout << error << endl << endl;
+		found = false;
+		cin.clear();
+		system("pause");
+	}
 }

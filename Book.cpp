@@ -32,6 +32,14 @@ Book::Book(string i, string b, string a, string p, int m, int d, int y, int q, d
 	retailPrice = r;
 }
 
+template <typename T>
+string Book::to_string_prec(const T a_value)
+{
+	ostringstream out;
+	out << setprecision(2) << fixed << a_value;
+	return out.str();
+}
+
 void Book::setISBN(string num)
 {
 	ISBN = num;
@@ -150,8 +158,8 @@ string Book::toString()
 	temp += "Publisher: " + publisher + '\n';
 	temp += "Date Added: " + date + '\n';
 	temp += "Quantity: " + to_string(quantity) + '\n';
-	temp += "Wholesale Cost: " + to_string(wholesaleCost) + '\n';
-	temp += "Retail Price: " + to_string(retailPrice);
+	temp += "Wholesale Cost: " + to_string_prec(wholesaleCost) + '\n';
+	temp += "Retail Price: " + to_string_prec(retailPrice);
 	return temp;
 }
 
