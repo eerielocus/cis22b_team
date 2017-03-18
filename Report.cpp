@@ -3,53 +3,112 @@
 #include "Report.h"
 
 using namespace std;
-Report::Report(BookStore *store) : Menu(store)
-{
-}
+
+Report::Report(BookStore *store) : Menu(store) { }
+
 void Report::menu()
 {
-	
-}
-void Report::inventory() //prints out inventory's info
-{
-	cout << "Here's the inventory:" << endl;
-	for (int i = 0; i < 25; i++)
+	load();
+	int choice;
+	bool exit = false;
+
+	while (exit == false)
 	{
-		cout << books[i].toString() << endl;
+		system("cls");
+		cout << count;
+		cout << "{ REPORT MENU }" << endl << endl;
+		cout << "Select option below:" << endl;
+		cout << "1. [View Inventory]" << endl;
+		cout << "2. [Inventory Wholesale Value]" << endl;
+		cout << "3. [Inventory Retail Value]" << endl;
+		cout << "4. [Sort Inventory]" << endl;
+		cout << "5. [Return to Main Menu]" << endl << endl;
+		cout << "Please enter in choice: ";
+		cin >> choice;
+		cin.clear();
+		cin.ignore();
+
+		if (choice > 0 && choice < 6)
+		{
+			switch (choice)
+			{
+			case 1:
+				display();
+				break;
+
+			case 2:
+				wholesaleValue();
+				break;
+
+			case 3:
+				retailValue();
+				break;
+
+			case 4:
+				cost();
+				display();
+				break;
+
+			case 5:
+				exit = true;
+				return;
+			}
+		}
 	}
 }
+
+void Report::display() //prints out inventory's info
+{
+	cout << "{ DISPLAY INVENTORY }" << endl << endl;
+	for (int i = 0; i < size; i++)
+	{
+		cout << books[i].toString() << endl << "\n------------\n";
+	}
+	system("pause");
+}
+
 void Report::wholesaleValue() //Sorts by Wholesale value
 {
-	int total = 0;
-	int size;
-	size = sizeof(books) + 1;
-	cout << "List of all wholesale values: ";
+	double total = 0;
+
+	system("cls");
+	cout << "{ INVENTORY WHOLESALE VALUE }" << endl << endl;
+	cout << "Full list of wholesale cost:" << endl;
+
 	for (int i = 0; i < size; i++)
 	{
-		cout >> books[i].getTitle() >> ": " >> books[i].getWholesaleCost() << endl;
+		cout << books[i].getTitle() << ": " << books[i].getWholesaleCost() << endl;
 		total += books[i].getWholesaleCost();
 	}
-	cout << "The total wholesale value of the inventory is: " << total << endl;
+
+	cout << "\n{ TOTAL WHOLESALE VALUE OF INVENTORY }\n" << "[ $" << total << " ]\n" << endl;
+	system("pause");
 }
+
 void Report::retailValue() //Sorts by retail Value
 {
-	int total = 0;
-	int size;
-	size = sizeof(books) + 1;
-	cout << "List of all retail values: ";
+	double total = 0;
+
+	system("cls");
+	cout << "{ INVENTORY RETAIL VALUE }" << endl << endl;
+	cout << "Full list of retail price:" << endl;
+
 	for (int i = 0; i < size; i++)
 	{
-		cout >> books[i].getTitle() >> ": " >> books[i].getWholesaleCost() << endl;
-		total += books[i].getWholesaleCost();
+		cout << books[i].getTitle() << ": " << books[i].getRetailPrice() << endl;
+		total += books[i].getRetailPrice();
 	}
-	cout << "The total retail value of the inventory is: " << total << endl;
+
+	cout << "\n{ TOTAL RETAIL VALUE OF INVENTORY }\n" << "[ $" << total << " ]\n" << endl;
+	system("pause");
 }
+
 void Report::quantity()
 {
-	int size, jcount;
-	size = sizeof(books) + 1;
+	int jcount;
 	int min = 999;
 	Book temp;
+
 	for (int i = 0; i < size; i++)
 	{
 		for (int j = 0; j < size - i; j++)
@@ -60,18 +119,19 @@ void Report::quantity()
 				jcount = j;
 			}
 		}
-		temp = books[size - 1 - i];
-		books[size - 1 - i] = books[jcount];
+		temp = books[size - i];
+		books[size - i] = books[jcount];
 		books[jcount] = temp;
 		min = 999;
 	}
 }
+
 void Report::cost()
 {
-	int size, jcount;
-	size = sizeof(books) + 1;
-	int min = 99999;
+	int jcount;
+	double min = 99999.00;
 	Book temp;
+
 	for (int i = 0; i < size; i++)
 	{
 		for (int j = 0; j < size - i; j++)
@@ -82,17 +142,17 @@ void Report::cost()
 				jcount = j;
 			}
 		}
-		temp = books[size - 1 - i];
-		books[size - 1 - i] = books[jcount];
+		temp = books[size - i];
+		books[size - i] = books[jcount];
 		books[jcount] = temp;
-		min = 99999;
+		min = 99999.00;
 	}
 }
+
 void Report::age() //Oldest books first in the array
 {
-	int size, jcount;
-	size = sizeof(books) + 1;
 	Book temp;
+
 	for (int i = 0; i < size; i++)
 	{
 		for (int j = 0; j < size-1; j++)
@@ -104,5 +164,14 @@ void Report::age() //Oldest books first in the array
 				books[j + 1] = temp;
 			}
 		}
+	}
+}
+
+void Report::load()
+{
+	for (int i = 0; i < size; i++)
+	{
+		books[i] = store.get(i);
+		count++;
 	}
 }

@@ -4,12 +4,6 @@
 
 using namespace std;
 
-Menu::Menu(BookStore *store)
-{
-	this->store = store;
-}
+Menu::Menu(BookStore *store) : store(*store) { }
 
-void Menu::menu()
-{
-	return;
-}
+void Menu::menu() { return; }

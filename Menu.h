@@ -8,7 +8,7 @@ using namespace std;
 class Menu
 {
 protected:
-	BookStore *store;
+	BookStore & store;
 
 public:
 	Menu(BookStore *store);

@@ -12,17 +12,20 @@ using namespace std;
 class Report : public Menu
 {
 private:
-	Book books[25];
+	int size = store.getCount();
+	int count = 0;
+	Book books[30];
 
 public:
 	Report(BookStore*);
 
 	void menu();
-	void inventory();
+	void display();
 	void wholesaleValue();
 	void retailValue();
 	void quantity();
 	void cost();
 	void age();
+	void load();
 };
 #endif

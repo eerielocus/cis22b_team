@@ -1,6 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 
 #include "InventoryModule.h"
+#include "Report.h"
 #include "BookStore.h"
 #include "Book.h"
 #include <iostream>
@@ -13,14 +14,15 @@ using namespace std;
 int main()
 {
 	BookStore bookMod("Booklist.txt");		// Create list and read file and input into array.
-	Inventory invMod(&bookMod);				// Pass created object array reference through the Menu constructor for Inventory.
-
 	
 	int moduleChoice;
 	bool flag1 = true;
 
 	while (flag1 == true)
 	{
+		Inventory invMod(&bookMod);
+		Report repMod(&bookMod);
+
 		system("cls");
 		cout << endl;
 		cout << setw(35) << "Serendipty Booksellers   " << endl;
@@ -34,6 +36,7 @@ int main()
 		cin >> moduleChoice;
 		if (moduleChoice < 5 && moduleChoice > 0)
 		{
+			
 			switch (moduleChoice)
 			{
 			case 1:
@@ -43,6 +46,7 @@ int main()
 				invMod.menu();	// Testing add function.
 				break;
 			case 3:
+				repMod.menu();
 				break;
 			case 4:
 				return 0;
