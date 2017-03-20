@@ -23,14 +23,13 @@ public:
 	BookStore();
 	BookStore(string);
 
-	virtual void menu();
+	void menu();
 
 	bool add(Book);			// Add book to list.
-	void remove(int);		// Remove book from list. (unfinished)
+	bool remove(int);		// Remove book from list. (unfinished)
 	void bookData();		// Input data from file.
 
-	template <class T>
-	void setData(T);
+	void toLower(basic_string<char> &);
 
 	Book & get(int);		// Get book from list via index.
 	int getCount();

@@ -13,7 +13,6 @@ class Report : public Menu
 {
 private:
 	int size = store.getCount();
-	int count = 0;
 	Book books[30];
 
 public:

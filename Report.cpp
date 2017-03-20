@@ -4,26 +4,44 @@
 
 using namespace std;
 
+/*
+Report Module: Allow listing of current inventory, total of both wholesale and retail values,
+and sort by quantity, age, and cost.
+
+Pseudocode:
+Main menu
+	Ask user for choice
+		1. Display
+		2. Wholesale Value - include multiple copies
+		3. Retail Value - include multiple copies
+		4. Sort
+			1. Quantity
+			2. Age
+			3. Cost
+		5. Exit
+*/
+
 Report::Report(BookStore *store) : Menu(store) { }
 
 void Report::menu()
 {
 	load();
 	int choice;
-	bool exit = false;
+	bool exit = false, exit2 = false;
 
 	while (exit == false)
 	{
 		system("cls");
-		cout << count;
-		cout << "{ REPORT MENU }" << endl << endl;
-		cout << "Select option below:" << endl;
-		cout << "1. [View Inventory]" << endl;
-		cout << "2. [Inventory Wholesale Value]" << endl;
-		cout << "3. [Inventory Retail Value]" << endl;
-		cout << "4. [Sort Inventory]" << endl;
-		cout << "5. [Return to Main Menu]" << endl << endl;
-		cout << "Please enter in choice: ";
+		cout << endl;
+		cout << setw(35) << "{ SERENDIPITY BOOKSELLERS }" << endl << endl;
+		cout << setw(35) << "{ REPORT MENU }            " << endl << endl;
+		cout << setw(25) << "Select option:" << endl;
+		cout << setw(35) << "1. [View Inventory]        " << endl;
+		cout << setw(35) << "2. [Total Wholesale Value] " << endl;
+		cout << setw(35) << "3. [Total Retail Value]    " << endl;
+		cout << setw(35) << "4. [Sort Inventory]        " << endl;
+		cout << setw(35) << "5. [Return to Main Menu]   " << endl << endl;
+		cout << setw(25) << "Enter choice: ";
 		cin >> choice;
 		cin.clear();
 		cin.ignore();
@@ -32,21 +50,72 @@ void Report::menu()
 		{
 			switch (choice)
 			{
-			case 1:
+			case 1: // Show inventory.
 				display();
 				break;
 
-			case 2:
+			case 2: // List by wholesale.
 				wholesaleValue();
 				break;
 
-			case 3:
+			case 3: // List by retail.
 				retailValue();
 				break;
 
-			case 4:
-				cost();
-				display();
+			case 4: // Select sort method.
+				while (!exit2)
+				{
+					system("cls");
+					cout << endl;
+					cout << setw(35) << "{ SERENDIPITY BOOKSELLERS }" << endl << endl;
+					cout << setw(35) << "{ SORT MENU }              " << endl << endl;
+					cout << setw(25) << "Select option:" << endl;
+					cout << setw(35) << "1. [Quantity]              " << endl;
+					cout << setw(35) << "2. [Wholesale Cost]        " << endl;
+					cout << setw(35) << "3. [Date Added]            " << endl;
+					cout << setw(35) << "4. [Return to Main Menu]   " << endl << endl;
+					cout << setw(25) << "Enter choice: ";
+					cin >> choice;
+					cin.clear();
+					cin.ignore();
+
+					if (choice > 0 && choice < 5)
+					{
+						switch (choice)
+						{
+						case 1: // Sort by quantity.
+							system("cls");
+							cout << endl;
+							cout << setw(35) << "{ SERENDIPITY BOOKSELLERS }" << endl << endl;
+							cout << setw(35) << "{ QUANTITY (HIGH->LOW) }   " << endl << endl;
+							quantity();
+							display();
+							break;
+
+						case 2: // Wholesale.
+							system("cls");
+							cout << endl;
+							cout << setw(35) << "{ SERENDIPITY BOOKSELLERS }" << endl << endl;
+							cout << setw(35) << "{ WHOLESALE (HIGH->LOW) }  " << endl << endl;
+							cost();
+							display();
+							break;
+
+						case 3: // Age.
+							system("cls");
+							cout << endl;
+							cout << setw(35) << "{ SERENDIPITY BOOKSELLERS }" << endl << endl;
+							cout << setw(35) << "{ DATE ADDED (OLD->NEW) }  " << endl << endl;
+							age();
+							display();
+							break;
+
+						case 4:
+							exit2 = true;
+							break;
+						}
+					}
+				}
 				break;
 
 			case 5:
@@ -57,9 +126,11 @@ void Report::menu()
 	}
 }
 
-void Report::display() //prints out inventory's info
+// Prints out inventory's info.
+void Report::display() 
 {
-	cout << "{ DISPLAY INVENTORY }" << endl << endl;
+	system("cls");
+	cout << setw(35) << "{ DISPLAY INVENTORY }      " << endl << endl;
 	for (int i = 0; i < size; i++)
 	{
 		cout << books[i].toString() << endl << "\n------------\n";
@@ -67,49 +138,65 @@ void Report::display() //prints out inventory's info
 	system("pause");
 }
 
-void Report::wholesaleValue() //Sorts by Wholesale value
+// Sorts by wholesale value.
+void Report::wholesaleValue()
 {
 	double total = 0;
 
 	system("cls");
-	cout << "{ INVENTORY WHOLESALE VALUE }" << endl << endl;
-	cout << "Full list of wholesale cost:" << endl;
+	cout << endl;
+	cout << setw(35) << "{ SERENDIPITY BOOKSELLERS }" << endl << endl;
+	cout << setw(35) << "{ TOTAL WHOLESALE VALUE }  " << endl << endl;
 
 	for (int i = 0; i < size; i++)
 	{
-		cout << books[i].getTitle() << ": " << books[i].getWholesaleCost() << endl;
-		total += books[i].getWholesaleCost();
+		cout << setw(60) << books[i].getTitle() << ": $" << books[i].getWholesaleCost() << " (" << books[i].getQuantity() << ")" << endl;
+
+		if (books[i].getQuantity() == 1)
+			total += books[i].getWholesaleCost();
+		else if (books[i].getQuantity() > 1)
+			total += books[i].getWholesaleCost() * books[i].getQuantity();
 	}
 
-	cout << "\n{ TOTAL WHOLESALE VALUE OF INVENTORY }\n" << "[ $" << total << " ]\n" << endl;
+	cout << endl;
+	cout << setw(35) << "{ TOTAL WHOLESALE VALUE }  " << endl;
+	cout << setw(18) << "[ $" << total << " ]\n" << endl;
 	system("pause");
 }
 
-void Report::retailValue() //Sorts by retail Value
+// Sorts by retail value.
+void Report::retailValue()
 {
 	double total = 0;
 
 	system("cls");
-	cout << "{ INVENTORY RETAIL VALUE }" << endl << endl;
-	cout << "Full list of retail price:" << endl;
+	cout << endl;
+	cout << setw(35) << "{ SERENDIPITY BOOKSELLERS }" << endl << endl;
+	cout << setw(35) << "{ TOTAL RETAIL VALUE }     " << endl << endl;
 
 	for (int i = 0; i < size; i++)
 	{
-		cout << books[i].getTitle() << ": " << books[i].getRetailPrice() << endl;
-		total += books[i].getRetailPrice();
-	}
+		cout << setw(60) << books[i].getTitle() << ": $" << books[i].getRetailPrice() << " (" << books[i].getQuantity() << ")" << endl;
 
-	cout << "\n{ TOTAL RETAIL VALUE OF INVENTORY }\n" << "[ $" << total << " ]\n" << endl;
+		if (books[i].getQuantity() == 1)
+			total += books[i].getRetailPrice();
+		else if (books[i].getQuantity() > 1)
+			total += books[i].getRetailPrice() * books[i].getQuantity();
+	}
+	cout << endl;
+	cout << setw(35) << "{ TOTAL WHOLESALE VALUE }  " << endl;
+	cout << setw(18) << "[ $" << total << " ]\n" << endl;
 	system("pause");
 }
 
+// Sort by greatest quantity first.
 void Report::quantity()
 {
 	int jcount;
 	int min = 999;
 	Book temp;
 
-	for (int i = 0; i < size; i++)
+	for (int i = 1; i < size; i++)
 	{
 		for (int j = 0; j < size - i; j++)
 		{
@@ -126,13 +213,14 @@ void Report::quantity()
 	}
 }
 
+// Sort by greatest price first.
 void Report::cost()
 {
 	int jcount;
 	double min = 99999.00;
 	Book temp;
 
-	for (int i = 0; i < size; i++)
+	for (int i = 1; i < size; i++)
 	{
 		for (int j = 0; j < size - i; j++)
 		{
@@ -149,15 +237,18 @@ void Report::cost()
 	}
 }
 
-void Report::age() //Oldest books first in the array
+// Sort by oldest book first.
+void Report::age()
 {
 	Book temp;
 
-	for (int i = 0; i < size; i++)
+	for (int i = 1; i < size; i++)
 	{
-		for (int j = 0; j < size-1; j++)
+		for (int j = 0; j < size - 1; j++)
 		{
-			if (books[j].getDate() > books[j + 1].getDate()) //Swap
+			string tempDate1 = to_string(books[j].getYear()) + string(2 - to_string(books[j].getMonth()).length(), '0') + to_string(books[j].getMonth()) + string(2 - to_string(books[j].getDay()).length(), '0') + to_string(books[j].getDay());
+			string tempDate2 = to_string(books[j + 1].getYear()) + string(2 - to_string(books[j + 1].getMonth()).length(), '0') + to_string(books[j + 1].getMonth()) + string(2 - to_string(books[j + 1].getDay()).length(), '0') + to_string(books[j + 1].getDay());
+			if (tempDate1 > tempDate2)
 			{
 				temp = books[j];
 				books[j] = books[j + 1];
@@ -167,11 +258,9 @@ void Report::age() //Oldest books first in the array
 	}
 }
 
+// Load inventory list into temporary list.
 void Report::load()
 {
 	for (int i = 0; i < size; i++)
-	{
 		books[i] = store.get(i);
-		count++;
-	}
 }

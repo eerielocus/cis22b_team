@@ -14,7 +14,6 @@ public:
 	Menu(BookStore *store);
 
 	virtual void menu();
-
 };
 
 #endif

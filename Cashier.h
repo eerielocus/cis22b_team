@@ -1,19 +1,20 @@
 #ifndef CASHIER_H
 #define CASHIER_H
 
+#include "Book.h"
+#include "Menu.h"
 #include <iostream>
 #include <iomanip>
 #include <string>
-#include "book.h"
-#include "bookstore.h"
-#include "Menu.h"
+
 
 using namespace std;
 
-class cashier : public Menu
+class Cashier : public Menu
 {
 public:
-	cashier(BookStore*);
+	Cashier(BookStore*);
+
 	void menu();
 };
 

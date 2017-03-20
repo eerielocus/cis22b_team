@@ -32,6 +32,7 @@ Book::Book(string i, string b, string a, string p, int m, int d, int y, int q, d
 	retailPrice = r;
 }
 
+// Function to convert double with proper precision out to string.
 template <typename T>
 string Book::to_string_prec(const T a_value)
 {
@@ -149,6 +150,7 @@ double Book::getRetailPrice() const
 	return retailPrice;
 }
 
+// Easy to call string output method.
 string Book::toString()
 {
 	string temp;
@@ -163,6 +165,7 @@ string Book::toString()
 	return temp;
 }
 
+// Operator overloading for both input and output.
 ofstream &operator <<(ofstream &out, Book &book)
 {
 	out << book.ISBN << endl;
@@ -193,6 +196,7 @@ ifstream &operator >>(ifstream &in, Book &book)
 	getline(in, tempStr, '\n');
 	book.date = tempStr;
 
+	// Parse through date string and place into appropriate variables.
 	tempCo = tempStr.substr(0, tempStr.find("/", 0));
 	tempStr = tempStr.substr(tempStr.find("/", 0) + 1, tempStr.length());
 	book.month = stoi(tempCo);

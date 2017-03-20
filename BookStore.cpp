@@ -4,6 +4,20 @@
 
 using namespace std;
 
+/*
+BookStore Module: Contains the master list of books, all the necessary functions to add, remove, get,
+find, and load books.
+
+Constructor called with file name passed.
+	Load file and add to list.
+		1. Add
+		2. Remove
+		3. Get book from index
+		4. Get count
+		5. Get size
+		6. Find
+*/
+
 BookStore::BookStore() { count = 0; }
 
 BookStore::BookStore(string input) 
@@ -13,14 +27,10 @@ BookStore::BookStore(string input)
 	bookData();
 }
 
-void BookStore::menu() 
-{ 
-	cout << "\n\nThis ran.\n\n";
-	return; 
-}
+void BookStore::menu() { return; }
 
 // Simple void function to make strings lowercase.
-void toLower(basic_string<char>& s)
+void BookStore::toLower(basic_string<char> & s)
 {
 	for (basic_string<char>::iterator p = s.begin(); p != s.end(); ++p) 
 		*p = tolower(*p);
@@ -41,18 +51,22 @@ bool BookStore::add(Book book)
 	return false;
 }
 
-void BookStore::remove(int index)
+bool BookStore::remove(int index)
 {
-	if (index == (size - 1))
+	if (index == (count - 1))
+	{
 		bookList[index] = Book();
+		count--;
+		return true;
+	}
+	else if (index > count)
+		return false;
 
 	for (int i = index; i < (size - 1); i++)
 		bookList[i] = bookList[i + 1];
 
 	count--;
-
-	for (int k = count; k < size; k++)
-		bookList[k] = Book();
+	return true;
 }
 
 // Takes input file data and inserts into appropriate attributes of Book.
@@ -153,7 +167,7 @@ int BookStore::lookUp(string type, int choice, int searched[])
 			string temp = bookList[i].title;
 			toLower(temp);
 			toLower(type);
-			if (type.find(temp.c_str(), 0, type.size()) == 0)
+			if (temp.find(type) != string::npos)
 			{
 				searched[counter] = i;
 				counter++;
@@ -168,7 +182,7 @@ int BookStore::lookUp(string type, int choice, int searched[])
 		for (int i = 0; i < count; i++)
 		{
 			string temp = bookList[i].ISBN;
-			if (type.find(temp.c_str(), 0, type.size()) == 0)
+			if (temp.find(type) != string::npos)
 			{
 				searched[counter] = i;
 				counter++;
@@ -185,7 +199,7 @@ int BookStore::lookUp(string type, int choice, int searched[])
 			string temp = bookList[i].author;
 			toLower(temp);
 			toLower(type);
-			if (type.find(temp.c_str(), 0, type.size()) == 0)
+			if (temp.find(type) != string::npos)
 			{
 				searched[counter] = i;
 				counter++;

@@ -5,6 +5,7 @@
 #include "Menu.h"
 #include <string>
 #include <iostream>
+#include <ctime>
 
 using namespace std;
 
