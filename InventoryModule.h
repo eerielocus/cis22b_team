@@ -14,6 +14,7 @@ class Inventory : public Menu
 protected:
 	int bookCount;
 	const static int sizeI = 30;
+	bool edited = false;
 
 	// Current time input using <ctime>.
 	time_t rawtime;

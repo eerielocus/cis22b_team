@@ -35,9 +35,9 @@ int main()
 
 	while (!exit)
 	{
-		Inventory invMod(&bookMod);
-		Report repMod(&bookMod);
-		Cashier cashMod(&bookMod);
+		Menu *cashMod = new Cashier(&bookMod);
+		Menu *repMod = new Report(&bookMod);
+		Menu *invMod = new Inventory(&bookMod);
 
 		system("cls");
 		cout << endl;
@@ -53,15 +53,18 @@ int main()
 			switch (moduleChoice)
 			{
 			case 1:
-				cashMod.menu();
+				cashMod->menu();
 				break;
 			case 2:
-				invMod.menu();
+				invMod->menu();
 				break;
 			case 3:
-				repMod.menu();
+				repMod->menu();
 				break;
 			case 4:
+				delete cashMod;
+				delete repMod;
+				delete invMod;
 				return 0;
 			}
 		}

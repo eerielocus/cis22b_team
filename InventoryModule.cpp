@@ -65,7 +65,7 @@ void Inventory::menu()
 				break;
 
 			case 5:
-				if (store.getCount() > bookCount || store.getCount() < bookCount)
+				if (store.getCount() > bookCount || store.getCount() < bookCount || edited)
 				{
 					cout << setw(25) << "Save? (Y/N)   " << endl;
 					cout << setw(25) << "Enter choice: ";
@@ -76,6 +76,7 @@ void Inventory::menu()
 					{
 						store.bookWrite();
 						cout << setw(25) << "{ SAVED }     ";
+						edited = false;
 					}
 				}
 				exit = true;
@@ -88,7 +89,6 @@ void Inventory::menu()
 			choice = 0;
 			cin.clear();
 			cin.ignore(1000, '\n');
-			system("pause");
 		}
 	}
 }
@@ -456,6 +456,7 @@ void Inventory::editBook()
 				temp.setTitle(term);
 
 				cout << "\n{ SUCCESSFULLY CHANGED: [" << tempStr << "] TO: [" << temp.getTitle() << "] }\n" << endl;
+				edited = true;
 				cin.clear();
 				cin.ignore();
 				break;
@@ -469,6 +470,7 @@ void Inventory::editBook()
 				temp.setISBN(term);
 
 				cout << "\n{ SUCCESSFULLY CHANGED: [" << tempStr << "] TO: [" << temp.getISBN() << "] }\n" << endl;
+				edited = true;
 				cin.clear();
 				cin.ignore();
 				break;
@@ -482,6 +484,7 @@ void Inventory::editBook()
 				temp.setAuthor(term);
 
 				cout << "\n{ SUCCESSFULLY CHANGED: [" << tempStr << "] TO: [" << temp.getAuthor() << "] }\n" << endl;
+				edited = true;
 				cin.clear();
 				cin.ignore();
 				break;
@@ -495,6 +498,7 @@ void Inventory::editBook()
 				temp.setPublisher(term);
 
 				cout << "\n{ SUCCESSFULLY CHANGED: [" << tempStr << "] TO: [" << temp.getPublisher() << "] }\n" << endl;
+				edited = true;
 				cin.clear();
 				cin.ignore();
 				break;
@@ -526,6 +530,7 @@ void Inventory::editBook()
 					temp.setYear(year);
 
 					cout << "\n{ SUCCESSFULLY CHANGED: [" << tempStr << "] TO: [" << temp.getDate() << "] }\n" << endl;
+					edited = true;
 					cin.clear();
 					cin.ignore();
 				}
@@ -542,6 +547,7 @@ void Inventory::editBook()
 							temp.setYear(year);
 
 							cout << "\n{ SUCCESSFULLY CHANGED: [" << tempStr << "] TO: [" << temp.getDate() << "] }\n" << endl;
+							edited = true;
 							cin.clear();
 							cin.ignore();
 						}
@@ -577,6 +583,7 @@ void Inventory::editBook()
 				temp.setQuantity(quant);
 
 				cout << "\n{ SUCCESSFULLY CHANGED: [" << tempInt << "] TO: [" << temp.getQuantity() << "] }\n" << endl;
+				edited = true;
 				cin.clear();
 				cin.ignore();
 				break;
@@ -591,6 +598,7 @@ void Inventory::editBook()
 				temp.setWholesaleCost(price);
 
 				cout << "\n{ SUCCESSFULLY CHANGED: [" << tempDbl << "] TO: [" << temp.getWholesaleCost() << "] }\n" << endl;
+				edited = true;
 				cin.clear();
 				cin.ignore();
 				break;
@@ -605,6 +613,7 @@ void Inventory::editBook()
 				temp.setRetailPrice(price);
 
 				cout << "\n{ SUCCESSFULLY CHANGED: [" << tempDbl << "] TO: [" << temp.getRetailPrice() << "] }\n" << endl;
+				edited = true;
 				cin.clear();
 				cin.ignore();
 				break;

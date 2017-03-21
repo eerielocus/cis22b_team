@@ -19,7 +19,7 @@ Island
 Aldous Huxley
 Harper Perennial Modern Classics
 10/20/2009
-4
+12
 4.45
 12.39
 0399501487
@@ -198,3 +198,11 @@ DAW Books
 12
 9.73
 12.99
+1309424
+Test
+Test
+Test
+03/21/2017
+49
+49.99
+59.99

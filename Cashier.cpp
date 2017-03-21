@@ -54,9 +54,9 @@ void Cashier::menu()
 		{
 			cerr << "\n{ INVALID OPTION }\n" << endl;
 			cin.clear();
+			cin.get();
 			cin.ignore(1000, '\n');
 			choice = 0;
-			system("pause");
 		}
 
 		try
@@ -121,10 +121,9 @@ void Cashier::menu()
 				{
 					cerr << "\n{ INVALID OPTION }\n" << endl;
 					cin.clear();
-					cin.ignore(1000, '\n');
+					cin.get();
 					choice = 0;
 					found = false;
-					system("pause");
 					break;
 				}
 			}
@@ -148,13 +147,14 @@ void Cashier::menu()
 						{
 							cerr << "Invalid quantity." << endl << endl;
 							cin.clear();
+							cin.get();
 							cin.ignore(1000, '\n');
-							system("pause");
 						}
 						else if (store.get(index[i]).getQuantity() < qty)
 						{
 							cout << "Not enough in stock." << endl << endl;
-							system("pause");
+							cin.get();
+							cin.ignore(1000, '\n');
 						}
 						else if (store.get(index[i]).getQuantity() >= qty)
 						{
@@ -169,12 +169,14 @@ void Cashier::menu()
 						store.get(index[i]).setQuantity(store.get(index[i]).getQuantity() - qty);
 						quant[i] = 1;
 						i++; // If so, remove -1, and increment count.
-						system("pause");
+						cin.get();
+						cin.ignore(1000, '\n');
 					}
 					else
 					{
 						cout << "Not in stock." << endl << endl;
-						system("pause");
+						cin.get();
+						cin.ignore(1000, '\n');
 					}
 				}
 			}
@@ -184,8 +186,8 @@ void Cashier::menu()
 			cerr << error << endl << endl;
 			found = false;
 			cin.clear();
+			cin.get();
 			cin.ignore(1000, '\n');
-			system("pause");
 		}
 	}
 
@@ -217,13 +219,15 @@ void Cashier::menu()
 		cout << setw(20) << "Subtax: $" << setprecision(2) << fixed << subtax << endl;
 		cout << setw(20) << "Total: $" << setprecision(2) << fixed << total << endl << endl;
 
-		system("pause");
+		cin.get();
+		cin.ignore(1000, '\n');
 		store.bookWrite(); // Save quantity change to file.
 	}
 	else
 	{
 		cout << "Cart is empty. Returning the main menu." << endl;
-		system("pause");
+		cin.get();
+		cin.ignore(1000, '\n');
 	}
 }
 
