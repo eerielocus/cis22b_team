@@ -74,7 +74,9 @@ int main()
 			cin.clear();
 			cin.ignore(1000, '\n');
 		}
+		delete cashMod;
+		delete repMod;
+		delete invMod;
 	}
-	system("pause");
 	return 0;
 }
