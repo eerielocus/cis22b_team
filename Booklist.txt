@@ -48,8 +48,8 @@ Mariner Books
 14.99
 0812976533
 Midnight's Children
+Salman Rushdie
 Random House Trade Paperbacks
-This Was Missing
 04/04/2006
 77
 2.31
@@ -161,7 +161,7 @@ Broadway Books
 0812550706
 Ender's Game
 Orson Scott Card
-Another Missing One
+Tor Science Fiction
 07/15/1995
 1
 3.34
@@ -177,7 +177,7 @@ Penguin Books
 1476738025
 A man Called Ove: A Novel
 Fredrik Backman
-Another Missing One
+Atria Books; Reprint edition
 10/05/2015
 1
 199.99
