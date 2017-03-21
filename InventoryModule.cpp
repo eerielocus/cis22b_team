@@ -273,10 +273,7 @@ void Inventory::addBook()
 
 			if (!exit && create)
 			{
-				// Current time input using <ctime>.
 				int month, day, year;
-				time_t rawtime;
-				struct tm* timeinfo;
 
 				// Pass rawtime into appropriate function for localtime.
 				time(&rawtime);
@@ -418,6 +415,15 @@ void Inventory::editBook()
 	while (!exit && found)
 	{
 		Book &temp = store.get(searchResult);
+
+		// Pass rawtime into appropriate function for localtime.
+		time(&rawtime);
+		timeinfo = localtime(&rawtime);
+
+		int monthCheck = timeinfo->tm_mon + 01;
+		int dayCheck = timeinfo->tm_mday;
+		int yearCheck = timeinfo->tm_year + 1900;
+
 		choice = 0;
 
 		system("cls");
@@ -503,22 +509,69 @@ void Inventory::editBook()
 				cout << setw(34) << "Enter new year (YYYY): ";
 				cin.ignore();
 				cin >> year;
-
-				tempStr = temp.getDate();
-				temp.setDate(month, day, year);
-				temp.setMonth(month);
-				temp.setDay(day);
-				temp.setYear(year);
-
-				cout << "\n{ SUCCESSFULLY CHANGED: [" << tempStr << "] TO: [" << temp.getDate() << "] }\n" << endl;
-				cin.clear();
 				cin.ignore();
+
+				if (month > 12 || day > 32)
+				{
+					cout << "\n{ UNABLE TO CHANGE DUE TO INVALID MONTH/DAY }\n" << endl;
+					cin.clear();
+					cin.ignore();
+				}
+				else if (year < yearCheck)
+				{
+					tempStr = temp.getDate();
+					temp.setDate(month, day, year);
+					temp.setMonth(month);
+					temp.setDay(day);
+					temp.setYear(year);
+
+					cout << "\n{ SUCCESSFULLY CHANGED: [" << tempStr << "] TO: [" << temp.getDate() << "] }\n" << endl;
+					cin.clear();
+					cin.ignore();
+				}
+				else if (year == yearCheck)
+				{
+					if (month <= monthCheck)
+					{
+						if (day <= dayCheck)
+						{
+							tempStr = temp.getDate();
+							temp.setDate(month, day, year);
+							temp.setMonth(month);
+							temp.setDay(day);
+							temp.setYear(year);
+
+							cout << "\n{ SUCCESSFULLY CHANGED: [" << tempStr << "] TO: [" << temp.getDate() << "] }\n" << endl;
+							cin.clear();
+							cin.ignore();
+						}
+						else
+						{
+							cout << "\n{ UNABLE TO CHANGE DUE TO DATE LATER THAN CURRENT DATE }\n" << endl;
+							cin.clear();
+							cin.ignore();
+						}
+					}
+					else
+					{
+						cout << "\n{ UNABLE TO CHANGE DUE TO DATE LATER THAN CURRENT DATE }\n" << endl;
+						cin.clear();
+						cin.ignore();
+					}
+				}
+				else
+				{
+					cout << "\n{ UNABLE TO CHANGE DUE TO DATE LATER THAN CURRENT DATE }\n" << endl;
+					cin.clear();
+					cin.ignore();
+				}
 				break;
 				
 			case 6: // Quantity.
 				cout << endl;
 				cout << setw(31) << "Enter new quantity: ";
 				cin >> quant;
+				cin.ignore();
 
 				tempInt = temp.getQuantity();
 				temp.setQuantity(quant);
@@ -532,6 +585,7 @@ void Inventory::editBook()
 				cout << endl;
 				cout << setw(37) << "Enter new wholesale cost: ";
 				cin >> price;
+				cin.ignore();
 
 				tempDbl = temp.getWholesaleCost();
 				temp.setWholesaleCost(price);
@@ -545,6 +599,7 @@ void Inventory::editBook()
 				cout << endl;
 				cout << setw(35) << "Enter new retail price: ";
 				cin >> price;
+				cin.ignore();
 
 				tempDbl = temp.getRetailPrice();
 				temp.setRetailPrice(price);

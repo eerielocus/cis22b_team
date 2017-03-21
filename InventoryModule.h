@@ -15,6 +15,11 @@ protected:
 	int bookCount;
 	const static int sizeI = 30;
 
+	// Current time input using <ctime>.
+	time_t rawtime;
+	struct tm* timeinfo;
+
+
 public:
 	Inventory(BookStore*);
 
