@@ -17,7 +17,7 @@ private:
 	const static int size = 30;
 
 protected:
-	Book bookList[size];
+	Book bookList[size];			// Book shelf.
 
 public:
 	BookStore();
@@ -25,17 +25,19 @@ public:
 
 	void menu();
 
-	bool add(Book);			// Add book to list.
-	bool remove(int);		// Remove book from list. (unfinished)
-	void bookData();		// Input data from file.
+	bool add(Book);					// Add book to list.
+	bool remove(int);				// Remove book from list. (unfinished)
+	void bookData();				// Input data from file.
+	void bookWrite();				// Output data to file.
 
 	void toLower(basic_string<char> &);
 
-	Book & get(int);		// Get book from list via index.
-	int getCount();
-	int getSize() const;
-	int findBook(string, int);
-	int lookUp(string, int, int[]);
+	Book & get(int);				// Get book from list via index.
+	int getCount();					// Get # of books in list.
+	int getOldCount();				// Get # of books initially in list.
+	int getSize() const;			// Get size of book shelf.
+	int findBook(string, int);		// Find book with exact name.
+	int lookUp(string, int, int[]);	// Find book with partial name.
 };
 
 #endif

@@ -46,6 +46,15 @@ void Report::menu()
 		cin.clear();
 		cin.ignore();
 
+		if (cin.fail())
+		{
+			cerr << "\n{ INVALID OPTION }\n" << endl;
+			cin.clear();
+			cin.ignore(1000, '\n');
+			choice = 0;
+			system("pause");
+		}
+
 		if (choice > 0 && choice < 6)
 		{
 			switch (choice)
@@ -123,6 +132,14 @@ void Report::menu()
 				return;
 			}
 		}
+		else
+		{
+			cerr << "\n{ INVALID OPTION }\n" << endl;
+			cin.clear();
+			cin.ignore(1000, '\n');
+			choice = 0;
+			system("pause");
+		}
 	}
 }
 
@@ -138,7 +155,7 @@ void Report::display()
 	system("pause");
 }
 
-// Sorts by wholesale value.
+// List wholesale value.
 void Report::wholesaleValue()
 {
 	double total = 0;
@@ -164,7 +181,7 @@ void Report::wholesaleValue()
 	system("pause");
 }
 
-// Sorts by retail value.
+// List retail value.
 void Report::retailValue()
 {
 	double total = 0;
@@ -213,7 +230,7 @@ void Report::quantity()
 	}
 }
 
-// Sort by greatest price first.
+// Sort by greatest cost first.
 void Report::cost()
 {
 	int jcount;

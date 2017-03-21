@@ -12,6 +12,7 @@ using namespace std;
 class Inventory : public Menu
 {
 protected:
+	int bookCount;
 	const static int sizeI = 30;
 
 public:

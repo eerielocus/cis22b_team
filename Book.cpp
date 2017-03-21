@@ -26,13 +26,13 @@ Book::Book(string i, string b, string a, string p, int m, int d, int y, int q, d
 	month = m;
 	day = d;
 	year = y;
-	date = to_string(month) + "/" + to_string(day) + "/" + to_string(year);
+	date = string(2 - to_string(month).length(), '0') + to_string(month) + "/" + string(2 - to_string(day).length(), '0') + to_string(day) + "/" + to_string(year);
 	quantity = q;
 	wholesaleCost = c;
 	retailPrice = r;
 }
 
-// Function to convert double with proper precision out to string.
+// Function to convert double with proper precision out to string. string(2 - to_string(month).length(), '0')
 template <typename T>
 string Book::to_string_prec(const T a_value)
 {
@@ -165,7 +165,7 @@ string Book::toString()
 	return temp;
 }
 
-// Operator overloading for both input and output.
+// Operator overloading for both reading  of and writing to file.
 ofstream &operator <<(ofstream &out, Book &book)
 {
 	out << book.ISBN << endl;
@@ -186,6 +186,10 @@ ifstream &operator >>(ifstream &in, Book &book)
 	double tempDbl;
 
 	getline(in, tempStr, '\n');
+
+	if (tempStr == "")
+		return in;
+
 	book.ISBN = tempStr;
 	getline(in, tempStr, '\n');
 	book.title = tempStr;

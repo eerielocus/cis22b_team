@@ -13,6 +13,8 @@
 using namespace std;
 
 /*
+Team: Michael Kang, Terry Busk, Frank Peng, Mark Chang
+
 Main Module: Contains all calls for each module, creates BookStore with input file name passed,
 provide menu options for each module and program exit.
 
@@ -26,10 +28,10 @@ Main menu
 
 int main()
 {
-	BookStore bookMod("Booklist.txt");		// Create list and read file and input into array.
-	
 	int moduleChoice;
 	bool exit = false;
+
+	BookStore bookMod("Booklist.txt");		// Create list and read file and input into array.
 
 	while (!exit)
 	{
@@ -48,7 +50,6 @@ int main()
 		cin >> moduleChoice;
 		if (moduleChoice < 5 && moduleChoice > 0)
 		{
-			
 			switch (moduleChoice)
 			{
 			case 1:

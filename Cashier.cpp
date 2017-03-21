@@ -5,12 +5,29 @@
 
 using namespace std;
 
+/*
+Cashier Module: Search by title, ISBN, or author. Will check stock, give option to add,
+and list and calculate total including tax.
+
+Pseudocode:
+Main menu
+	Ask user for choice
+		1. Title
+		2. ISBN
+		3. Author
+			Check stock, give option
+		4. Checkout
+			Calculate subtax total, tax, then total.
+			Save quantity changes
+		5. Exit
+*/
+
 Cashier::Cashier(BookStore* store) : Menu(store) { }
 
 void Cashier::menu()
 {
-	int index[30];
-	int choice, i = 0;
+	int index[30], quant[30];
+	int choice, qty, i = 0;
 	string term, yesno;
 	bool exit = false;
 
@@ -33,6 +50,15 @@ void Cashier::menu()
 		cin.clear();
 		cin.ignore();
 
+		if (cin.fail())
+		{
+			cerr << "\n{ INVALID OPTION }\n" << endl;
+			cin.clear();
+			cin.ignore(1000, '\n');
+			choice = 0;
+			system("pause");
+		}
+
 		try
 		{
 			while (!found)
@@ -53,8 +79,6 @@ void Cashier::menu()
 						found = true;
 
 						cout << "Found:\n" << store.get(index[i]).toString() << endl << endl;
-						cout << setw(25) << "Add to cart?: (Y/N) ";
-						cin >> yesno;
 						break;
 
 					case 2: // ISBN.
@@ -68,8 +92,6 @@ void Cashier::menu()
 						found = true;
 
 						cout << "Found:\n" << store.get(index[i]).toString() << endl << endl;
-						cout << setw(25) << "Add to cart?: (Y/N) ";
-						cin >> yesno;
 						break;
 
 					case 3: // Author.
@@ -83,13 +105,9 @@ void Cashier::menu()
 						found = true;
 
 						cout << "Found:\n" << store.get(index[i]).toString() << endl << endl;
-						cout << setw(25) << "Add to cart?: (Y/N) ";
-						cin >> yesno;
 						break;
 
 					case 4: // Checkout.
-						cout << setw(35) << "{ SERENDIPITY BOOKSELLERS }" << endl << endl;
-						cout << setw(35) << "{ PROCEEDING TO CHECKOUT } " << endl << endl;
 						exit = true;
 						found = true;
 						yesno = "";
@@ -98,39 +116,75 @@ void Cashier::menu()
 					case 5: // Exit.
 						return;
 					}
-
-					// If yes for adding book to cart.
-					if (yesno == "Y" || yesno == "y")
-					{
-						// Check if it is in stock.
-						if (store.get(index[i]).getQuantity() > 0)
-						{
-							store.get(index[i]).setQuantity(store.get(index[i]).getQuantity() - 1);
-							i++; // If so, remove -1, and increment count.
-						}
-						else
-						{
-							cout << "Not in stock." << endl << endl;
-							system("pause");
-						}
-					}
-					break;
 				}
 				else
 				{
-					cout << "\n{ INVALID OPTION }\n" << endl;
+					cerr << "\n{ INVALID OPTION }\n" << endl;
 					cin.clear();
 					cin.ignore(1000, '\n');
+					choice = 0;
+					found = false;
 					system("pause");
 					break;
+				}
+			}
+
+			if (found)
+			{
+				cout << setw(25) << "Add to cart?: (Y/N) ";
+				cin >> yesno;
+				cin.clear();
+				cin.ignore();
+				// If yes for adding book to cart.
+				if (yesno == "Y" || yesno == "y")
+				{
+					// Check if it is in stock.
+					if (store.get(index[i]).getQuantity() > 1)
+					{
+						cout << setw(16) << "Quantity? (" << store.get(index[i]).getQuantity() << " in stock.): ";
+						cin >> qty;
+
+						if (cin.fail())
+						{
+							cerr << "Invalid quantity." << endl << endl;
+							cin.clear();
+							cin.ignore(1000, '\n');
+							system("pause");
+						}
+						else if (store.get(index[i]).getQuantity() < qty)
+						{
+							cout << "Not enough in stock." << endl << endl;
+							system("pause");
+						}
+						else if (store.get(index[i]).getQuantity() >= qty)
+						{
+							store.get(index[i]).setQuantity(store.get(index[i]).getQuantity() - qty);
+							quant[i] = qty;
+							i++; // If so, remove -1, and increment count.
+						}
+					}
+					else if (store.get(index[i]).getQuantity() == 1)
+					{
+						cout << "Only 1 in stock. Adding to cart." << endl << endl;
+						store.get(index[i]).setQuantity(store.get(index[i]).getQuantity() - qty);
+						quant[i] = 1;
+						i++; // If so, remove -1, and increment count.
+						system("pause");
+					}
+					else
+					{
+						cout << "Not in stock." << endl << endl;
+						system("pause");
+					}
 				}
 			}
 		}
 		catch (char* error)
 		{
-			cout << error << endl << endl;
+			cerr << error << endl << endl;
 			found = false;
 			cin.clear();
+			cin.ignore(1000, '\n');
 			system("pause");
 		}
 	}
@@ -149,8 +203,8 @@ void Cashier::menu()
 	// Loop through cart and print out all items, and add to subtotal.
 	for (int j = 0; j < i; j++)
 	{
-		cout << setw(4) << store.get(index[j]).getQuantity() << setw(16) << store.get(index[j]).getISBN() << setw(30) << store.get(index[j]).getTitle() << setw(6) << "$" << store.get(index[j]).getRetailPrice() << endl;
-		subtotal += store.get(index[j]).getRetailPrice();
+		cout << setw(4) << quant[j] << setw(16) << store.get(index[j]).getISBN() << setw(30) << truncate(store.get(index[j]).getTitle()) << setw(6) << "$" << store.get(index[j]).getRetailPrice() * quant[j] << endl;
+		subtotal += store.get(index[j]).getRetailPrice() * quant[j];
 	}
 
 	subtax = (subtotal * .0725);
@@ -160,5 +214,21 @@ void Cashier::menu()
 	cout << setw(20) << "Subtotal: $" << setprecision(2) << fixed << subtotal << endl;
 	cout << setw(20) << "Subtax: $" << setprecision(2) << fixed << subtax << endl;
 	cout << setw(20) << "Total: $" << setprecision(2) << fixed << total << endl << endl;
+
 	system("pause");
+	store.bookWrite(); // Save quantity change to file.
+}
+
+// Simple string manipulator for long book titles.
+string Cashier::truncate(string str)
+{
+	bool show = true;
+	int width = 16;
+
+	if (str.length() > width)
+		if (show)
+			return str.substr(0, width) + "...";
+		else
+			return str.substr(0, width);
+	return str;
 }

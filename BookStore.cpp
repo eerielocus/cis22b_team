@@ -16,6 +16,7 @@ Constructor called with file name passed.
 		4. Get count
 		5. Get size
 		6. Find
+		7. Write to file
 */
 
 BookStore::BookStore() { count = 0; }
@@ -51,8 +52,10 @@ bool BookStore::add(Book book)
 	return false;
 }
 
+// Deletes book from list.
 bool BookStore::remove(int index)
 {
+	// If book is at the end of shelf, create blank book and reduce count.
 	if (index == (count - 1))
 	{
 		bookList[index] = Book();
@@ -73,17 +76,34 @@ bool BookStore::remove(int index)
 void BookStore::bookData()
 {
 	ifstream in;
+	string buffer;
 	in.open(file, ios::in);
 
-	while (!in.eof())
+	while (in.good())
 	{
 		Book temp;
 		in >> temp;
+
+		if (temp.ISBN == "")
+			break;
+
 		add(temp);
 	}
 	in.close();
 }
 
+// Takes current data and writes it back to file.
+void BookStore::bookWrite()
+{
+	ofstream out;
+	out.open(file, ios::out);
+
+	for (int i = 0; i < count; i++)
+		out << bookList[i];
+	out.close();
+}
+
+// Return reference of book at index.
 Book & BookStore::get(int index) { return bookList[index]; }
 
 int BookStore::getCount() { return count; }
@@ -153,7 +173,7 @@ int BookStore::findBook(string type, int choice)
 }
 
 // Partial search term book finder. Pass search term string, choice of book attribute,
-// and an array to store indexes that match the search term. 
+// and an array to store indexes that match the search term. Use for Inventory module.
 // Returns an int that is the counter to use for the array holding the stored indexes.
 int BookStore::lookUp(string type, int choice, int searched[])
 {
