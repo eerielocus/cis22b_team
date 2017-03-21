@@ -43,17 +43,6 @@ void Inventory::menu()
 		cout << setw(35) << "5. [ Return to Main Menu ] " << endl << endl;
 		cout << setw(25) << "Enter choice: ";
 		cin >> choice;
-		cin.clear();
-		cin.ignore();
-	
-		if (cin.fail())
-		{
-			cerr << "\n{ INVALID OPTION }\n" << endl;
-			cin.clear();
-			cin.ignore(1000, '\n');
-			choice = 0;
-			system("pause");
-		}
 
 		if (choice > 0 && choice < 6)
 		{
@@ -81,7 +70,6 @@ void Inventory::menu()
 					cout << setw(25) << "Save? (Y/N)   " << endl;
 					cout << setw(25) << "Enter choice: ";
 					cin >> yesno;
-					cin.clear();
 					cin.ignore();
 
 					if (yesno == "Y" || yesno == "y")
@@ -97,9 +85,9 @@ void Inventory::menu()
 		else
 		{
 			cerr << "\n{ INVALID OPTION }\n" << endl;
+			choice = 0;
 			cin.clear();
 			cin.ignore(1000, '\n');
-			choice = 0;
 			system("pause");
 		}
 	}
@@ -126,7 +114,6 @@ void Inventory::lookUpBook()
 			cout << setw(35) << "4. [ Exit ]                " << endl << endl;
 			cout << setw(25) << "Enter choice: ";
 			cin >> choice;
-			cin.clear();
 			cin.ignore();
 
 			if (choice > 0 && choice < 5)
@@ -166,11 +153,10 @@ void Inventory::lookUpBook()
 			else
 			{
 				cerr << "\n{ INVALID OPTION }\n" << endl;
+				choice = 0;
 				cin.clear();
 				cin.ignore(1000, '\n');
-				choice = 0;
 				system("pause");
-				break;
 			}
 
 			if (!exit)
@@ -255,25 +241,18 @@ void Inventory::addBook()
 					cout << setw(35) << "{ NEW BOOK }               " << endl << endl;
 					cout << "Please enter title: ";
 					getline(cin, tit);
-					cin.clear();
 					cout << "Please enter ISBN: ";
 					getline(cin, isbn);
-					cin.clear();
 					cout << "Please enter author: ";
 					getline(cin, auth);
-					cin.clear();
 					cout << "Please enter publisher: ";
 					getline(cin, pub);
-					cin.clear();
 					cout << "Please enter quantity: ";
 					cin >> quant;
-					cin.clear();
 					cout << "Please enter wholesale cost: ";
 					cin >> cost;
-					cin.clear();
 					cout << "Please enter retail price: ";
 					cin >> price;
-					cin.clear();
 					cin.ignore();
 					create = true;
 					break;

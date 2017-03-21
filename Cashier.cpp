@@ -129,7 +129,7 @@ void Cashier::menu()
 				}
 			}
 
-			if (found)
+			if (!exit && found)
 			{
 				cout << setw(25) << "Add to cart?: (Y/N) ";
 				cin >> yesno;
@@ -189,34 +189,42 @@ void Cashier::menu()
 		}
 	}
 
-	double subtotal = 0, subtax = 0, total = 0;
-
-	system("cls");
-	cout << endl;
-	cout << setw(35) << "{ SERENDIPITY BOOKSELLERS }" << endl << endl;
-	cout << setw(35) << "{ CASHIER CHECKOUT}        " << endl << endl;
-	cout << setw(40) << endl;
-	cout << setw(40) << endl;
-	cout << setw(4) << "Qty" << setw(16) << "ISBN" << setw(30) << "Title" << setw(10) << "Price" << endl;
-	cout << "____________________________________________________________" << endl << endl;
-
-	// Loop through cart and print out all items, and add to subtotal.
-	for (int j = 0; j < i; j++)
+	if (i > 0)
 	{
-		cout << setw(4) << quant[j] << setw(16) << store.get(index[j]).getISBN() << setw(30) << truncate(store.get(index[j]).getTitle()) << setw(6) << "$" << store.get(index[j]).getRetailPrice() * quant[j] << endl;
-		subtotal += store.get(index[j]).getRetailPrice() * quant[j];
+		double subtotal = 0, subtax = 0, total = 0;
+
+		system("cls");
+		cout << endl;
+		cout << setw(35) << "{ SERENDIPITY BOOKSELLERS }" << endl << endl;
+		cout << setw(35) << "{ CASHIER CHECKOUT}        " << endl << endl;
+		cout << setw(40) << endl;
+		cout << setw(40) << endl;
+		cout << setw(4) << "Qty" << setw(16) << "ISBN" << setw(30) << "Title" << setw(10) << "Price" << endl;
+		cout << "____________________________________________________________" << endl << endl;
+
+		// Loop through cart and print out all items, and add to subtotal.
+		for (int j = 0; j < i; j++)
+		{
+			cout << setw(4) << quant[j] << setw(16) << store.get(index[j]).getISBN() << setw(30) << truncate(store.get(index[j]).getTitle()) << setw(6) << "$" << store.get(index[j]).getRetailPrice() * quant[j] << endl;
+			subtotal += store.get(index[j]).getRetailPrice() * quant[j];
+		}
+
+		subtax = (subtotal * .0725);
+		total = (subtotal + subtax);
+
+		cout << endl << endl;
+		cout << setw(20) << "Subtotal: $" << setprecision(2) << fixed << subtotal << endl;
+		cout << setw(20) << "Subtax: $" << setprecision(2) << fixed << subtax << endl;
+		cout << setw(20) << "Total: $" << setprecision(2) << fixed << total << endl << endl;
+
+		system("pause");
+		store.bookWrite(); // Save quantity change to file.
 	}
-
-	subtax = (subtotal * .0725);
-	total = (subtotal + subtax);
-
-	cout << endl << endl;
-	cout << setw(20) << "Subtotal: $" << setprecision(2) << fixed << subtotal << endl;
-	cout << setw(20) << "Subtax: $" << setprecision(2) << fixed << subtax << endl;
-	cout << setw(20) << "Total: $" << setprecision(2) << fixed << total << endl << endl;
-
-	system("pause");
-	store.bookWrite(); // Save quantity change to file.
+	else
+	{
+		cout << "Cart is empty. Returning the main menu." << endl;
+		system("pause");
+	}
 }
 
 // Simple string manipulator for long book titles.

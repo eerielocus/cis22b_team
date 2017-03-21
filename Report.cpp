@@ -167,7 +167,7 @@ void Report::wholesaleValue()
 
 	for (int i = 0; i < size; i++)
 	{
-		cout << setw(60) << books[i].getTitle() << ": $" << books[i].getWholesaleCost() << " (" << books[i].getQuantity() << ")" << endl;
+		cout << setw(40) << books[i].getTitle() << ": $" << books[i].getWholesaleCost() << " (" << books[i].getQuantity() << ")" << endl;
 
 		if (books[i].getQuantity() == 1)
 			total += books[i].getWholesaleCost();
@@ -193,7 +193,7 @@ void Report::retailValue()
 
 	for (int i = 0; i < size; i++)
 	{
-		cout << setw(60) << books[i].getTitle() << ": $" << books[i].getRetailPrice() << " (" << books[i].getQuantity() << ")" << endl;
+		cout << setw(40) << books[i].getTitle() << ": $" << books[i].getRetailPrice() << " (" << books[i].getQuantity() << ")" << endl;
 
 		if (books[i].getQuantity() == 1)
 			total += books[i].getRetailPrice();
