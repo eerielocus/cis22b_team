@@ -16,8 +16,11 @@ Main menu
 		3. Retail Value - include multiple copies
 		4. Sort
 			1. Quantity
+				bubble sort sorting by quantity
 			2. Age
+				bubble sort sorting by quantity
 			3. Cost
+				bubble sort sorting by quantity
 		5. Exit
 */
 
@@ -136,9 +139,9 @@ void Report::menu()
 		{
 			cerr << "\n{ INVALID OPTION }\n" << endl;
 			cin.clear();
-			cin.get();
 			cin.ignore(1000, '\n');
 			choice = 0;
+			system("pause");
 		}
 	}
 }
@@ -152,8 +155,7 @@ void Report::display()
 	{
 		cout << books[i].toString() << endl << "\n------------\n";
 	}
-	cin.get();
-	cin.ignore(1000, '\n');
+	system("pause");
 }
 
 // List wholesale value.
@@ -168,7 +170,7 @@ void Report::wholesaleValue()
 
 	for (int i = 0; i < size; i++)
 	{
-		cout << setw(40) << books[i].getTitle() << ": $" << setprecision(2) << fixed << books[i].getWholesaleCost() << " (" << books[i].getQuantity() << ")" << endl;
+		cout << setw(40) << books[i].getTitle() << ": $" << books[i].getWholesaleCost() << " (" << books[i].getQuantity() << ")" << endl;
 
 		if (books[i].getQuantity() == 1)
 			total += books[i].getWholesaleCost();
@@ -194,7 +196,7 @@ void Report::retailValue()
 
 	for (int i = 0; i < size; i++)
 	{
-		cout << setw(40) << books[i].getTitle() << ": $" << setprecision(2) << fixed << books[i].getRetailPrice() << " (" << books[i].getQuantity() << ")" << endl;
+		cout << setw(40) << books[i].getTitle() << ": $" << books[i].getRetailPrice() << " (" << books[i].getQuantity() << ")" << endl;
 
 		if (books[i].getQuantity() == 1)
 			total += books[i].getRetailPrice();
