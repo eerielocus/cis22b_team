@@ -77,17 +77,30 @@ void BookStore::bookData()
 {
 	ifstream in;
 	string buffer;
-	in.open(file, ios::in);
+	in.exceptions(ifstream::failbit | ifstream::badbit);
 
-	while (in.good())
+	try
 	{
-		Book temp;
-		in >> temp;
+		in.open(file, ios::in);
 
-		if (temp.ISBN == "")
-			break;
+		while (!in.eof())
+		{
+			Book temp;
+			in >> temp;
 
-		add(temp);
+			if (temp.ISBN == "")
+				break;
+
+			add(temp);
+		}
+	}
+	catch (const ifstream::failure & e)
+	{
+		if (!in.eofbit) // If ifstream throws exception failbit AND eofbit is not hit, throw exception to main.
+		{
+			throw e;
+			return;
+		}
 	}
 	in.close();
 }
@@ -130,7 +143,6 @@ int BookStore::findBook(string type, int choice)
 		}
 
 		throw "No matching item found.";
-		system("pause");
 		return NULL;
 	}
 
@@ -148,7 +160,6 @@ int BookStore::findBook(string type, int choice)
 		}
 
 		throw "No matching item found.";
-		system("pause");
 		return NULL;
 	}
 
@@ -166,7 +177,6 @@ int BookStore::findBook(string type, int choice)
 		}
 
 		throw "No matching item found.";
-		system("pause");
 		return NULL;
 	}
 	return NULL;

@@ -39,7 +39,7 @@ void Cashier::menu()
 		cout << endl;
 		cout << setw(35) << "{ SERENDIPITY BOOKSELLERS }" << endl << endl;
 		cout << setw(35) << "{ CASHIER }                " << endl << endl;
-		cout << setw(25) << "Add by:       " << endl;
+		cout << setw(25) << "Search by:    " << endl;
 		cout << setw(35) << "1. [ Title ]               " << endl;
 		cout << setw(35) << "2. [ ISBN ]                " << endl;
 		cout << setw(35) << "3. [ Author ]              " << endl;
@@ -72,7 +72,7 @@ void Cashier::menu()
 						cout << endl;
 						cout << setw(35) << "{ SERENDIPITY BOOKSELLERS }" << endl << endl;
 						cout << setw(35) << "{ CASHIER }                " << endl << endl;
-						cout << "Please enter title to search: ";
+						cout << "Please enter exact title to search: ";
 						getline(cin, term);
 						cin.clear();
 						index[i] = store.findBook(term, choice);
@@ -85,7 +85,7 @@ void Cashier::menu()
 						cout << endl;
 						cout << setw(35) << "{ SERENDIPITY BOOKSELLERS }" << endl << endl;
 						cout << setw(35) << "{ CASHIER }                " << endl << endl;
-						cout << "Please enter ISBN to search: ";
+						cout << "Please enter exact ISBN to search: ";
 						getline(cin, term);
 						cin.clear();
 						index[i] = store.findBook(term, choice);
@@ -98,7 +98,7 @@ void Cashier::menu()
 						cout << endl;
 						cout << setw(35) << "{ SERENDIPITY BOOKSELLERS }" << endl << endl;
 						cout << setw(35) << "{ CASHIER }                " << endl << endl;
-						cout << "Please enter author to search: ";
+						cout << "Please enter exact author to search: ";
 						getline(cin, term);
 						cin.clear();
 						index[i] = store.findBook(term, choice);
@@ -127,7 +127,7 @@ void Cashier::menu()
 					break;
 				}
 			}
-
+			// If book found and user not selected to exit. Confirm adding to cart with quantity amount.
 			if (!exit && found)
 			{
 				cout << setw(25) << "Add to cart?: (Y/N) ";
@@ -145,14 +145,14 @@ void Cashier::menu()
 
 						if (cin.fail())
 						{
-							cerr << "Invalid quantity." << endl << endl;
+							cout << setw(22) << "Invalid quantity." << endl << endl;
 							cin.clear();
 							cin.get();
 							cin.ignore(1000, '\n');
 						}
 						else if (store.get(index[i]).getQuantity() < qty)
 						{
-							cout << "Not enough in stock." << endl << endl;
+							cout << setw(25) << "Not enough in stock." << endl << endl;
 							cin.get();
 							cin.ignore(1000, '\n');
 						}
@@ -165,7 +165,7 @@ void Cashier::menu()
 					}
 					else if (store.get(index[i]).getQuantity() == 1)
 					{
-						cout << "Only 1 in stock. Adding to cart." << endl << endl;
+						cout << setw(37) << "Only 1 in stock. Adding to cart." << endl << endl;
 						store.get(index[i]).setQuantity(store.get(index[i]).getQuantity() - qty);
 						quant[i] = 1;
 						i++; // If so, remove -1, and increment count.
@@ -174,7 +174,7 @@ void Cashier::menu()
 					}
 					else
 					{
-						cout << "Not in stock." << endl << endl;
+						cout << setw(18) << "Not in stock." << endl << endl;
 						cin.get();
 						cin.ignore(1000, '\n');
 					}

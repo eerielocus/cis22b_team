@@ -156,7 +156,6 @@ void Inventory::lookUpBook()
 				choice = 0;
 				cin.clear();
 				cin.ignore(1000, '\n');
-				system("pause");
 			}
 
 			if (!exit)
@@ -188,7 +187,7 @@ void Inventory::lookUpBook()
 				else
 				{
 					cerr << "\n{ INVALID OPTION }\n" << endl;
-					system("pause");
+					cin.clear();
 					cin.ignore(1000, '\n');
 					choice = 0;
 					exit = true;
@@ -202,7 +201,6 @@ void Inventory::lookUpBook()
 		cout << error << endl << endl;
 		cin.clear();
 		cin.ignore(1000, '\n');
-		system("pause");
 		return;
 	}
 	
@@ -268,7 +266,6 @@ void Inventory::addBook()
 				cin.clear();
 				cin.ignore(1000, '\n');
 				choice = 0;
-				system("pause");
 			}
 
 			if (!exit && create)
@@ -284,33 +281,27 @@ void Inventory::addBook()
 				day = timeinfo->tm_mday;
 				year = timeinfo->tm_year + 1900;
 
+				try
+				{
+					int bookExist = store.findBook(tit, 1);
+					cout << endl << "{ BOOK FOUND, ADDING NEW QUANTITY }" << endl << endl;
+					store.get(bookExist).setQuantity(store.get(bookExist).getQuantity() + quant);
+					edited = true;
+					cin.ignore(1000, '\n');
+					break;
+				}
+				catch (char* error)
+				{
+					cout << "Book not found in shelf, adding new book." << endl << endl;
+				}
+
 				// Create new book to add to list.
 				Book newBook(isbn, tit, auth, pub, month, day, year, quant, cost, price);
 
 				// Check if add is successful.
 				if (store.add(newBook))
-					cout << "\n------------\n" << "{ BOOK SUCCESSFULLY ADDED }" << endl << endl;
-
-				cout << "Would you like to continue?: (Y/N) ";
-				cin >> yesno;
-
-				if (yesno == "N" || yesno == "n")
-				{
-					exit = true;
-					break;
-				}
-				else if (yesno == "Y" || yesno == "y")
-					continue;
-				else
-				{
-					cerr << "\n{ INVALID OPTION }\n" << endl;
-					exit = true;
-					cin.clear();
-					cin.ignore(1000, '\n');
-					choice = 0;
-					system("pause");
-					break;
-				}
+					cout << endl << "{ BOOK SUCCESSFULLY ADDED }" << endl << endl;
+				cin.ignore(1000, '\n');
 			}
 		}
 	}
@@ -319,7 +310,6 @@ void Inventory::addBook()
 		cout << error << endl << endl;
 		cin.clear();
 		cin.ignore(1000, '\n');
-		system("pause");
 	}
 }
 
@@ -357,7 +347,7 @@ void Inventory::editBook()
 					cout << endl;
 					cout << setw(35) << "{ SERENDIPITY BOOKSELLERS }" << endl << endl;
 					cout << setw(35) << "{ EDIT BOOK }              " << endl << endl;
-					cout << "Please enter title to search: ";
+					cout << "Please enter exact title to search: ";
 					getline(cin, term);
 					cin.clear();
 					searchResult = store.findBook(term, choice);
@@ -368,7 +358,7 @@ void Inventory::editBook()
 					cout << endl;
 					cout << setw(35) << "{ SERENDIPITY BOOKSELLERS }" << endl << endl;
 					cout << setw(35) << "{ EDIT BOOK }              " << endl << endl;
-					cout << "Please enter ISBN to search: ";
+					cout << "Please enter exact ISBN to search: ";
 					getline(cin, term);
 					cin.clear();
 					searchResult = store.findBook(term, choice);
@@ -379,7 +369,7 @@ void Inventory::editBook()
 					cout << endl;
 					cout << setw(35) << "{ SERENDIPITY BOOKSELLERS }" << endl << endl;
 					cout << setw(35) << "{ EDIT BOOK }              " << endl << endl;
-					cout << "Please enter author to search: ";
+					cout << "Please enter exact author to search: ";
 					getline(cin, term);
 					cin.clear();
 					searchResult = store.findBook(term, choice);
@@ -398,7 +388,6 @@ void Inventory::editBook()
 				cin.clear();
 				cin.ignore(1000, '\n');
 				choice = 0;
-				system("pause");
 			}
 		}
 		catch (char* error)
@@ -408,7 +397,6 @@ void Inventory::editBook()
 			cin.clear();
 			cin.ignore(1000, '\n');
 			choice = 0;
-			system("pause");
 		}
 	}
 
@@ -713,7 +701,6 @@ void Inventory::deleteBook()
 					cin.clear();
 					cin.ignore(1000, '\n');
 					choice = 0;
-					system("pause");
 					break;
 				}
 
@@ -742,7 +729,6 @@ void Inventory::deleteBook()
 						cin.clear();
 						cin.ignore(1000, '\n');
 						choice = 0;
-						system("pause");
 					}
 				}
 			}
@@ -754,7 +740,6 @@ void Inventory::deleteBook()
 			cin.clear();
 			cin.ignore(1000, '\n');
 			choice = 0;
-			system("pause");
 		}
 	}
 }

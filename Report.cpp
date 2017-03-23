@@ -39,11 +39,11 @@ void Report::menu()
 		cout << setw(35) << "{ SERENDIPITY BOOKSELLERS }" << endl << endl;
 		cout << setw(35) << "{ REPORT MENU }            " << endl << endl;
 		cout << setw(25) << "Select option:" << endl;
-		cout << setw(35) << "1. [View Inventory]        " << endl;
-		cout << setw(35) << "2. [Total Wholesale Value] " << endl;
-		cout << setw(35) << "3. [Total Retail Value]    " << endl;
-		cout << setw(35) << "4. [Sort Inventory]        " << endl;
-		cout << setw(35) << "5. [Return to Main Menu]   " << endl << endl;
+		cout << setw(35) << "1. [ View Inventory ]      " << endl;
+		cout << setw(35) << "2. [ Wholesale Value ]     " << endl;
+		cout << setw(35) << "3. [ Retail Value ]        " << endl;
+		cout << setw(35) << "4. [ Sort Inventory ]      " << endl;
+		cout << setw(35) << "5. [ Return to Main Menu ] " << endl << endl;
 		cout << setw(25) << "Enter choice: ";
 		cin >> choice;
 		cin.clear();
@@ -82,10 +82,10 @@ void Report::menu()
 					cout << setw(35) << "{ SERENDIPITY BOOKSELLERS }" << endl << endl;
 					cout << setw(35) << "{ SORT MENU }              " << endl << endl;
 					cout << setw(25) << "Select option:" << endl;
-					cout << setw(35) << "1. [Quantity]              " << endl;
-					cout << setw(35) << "2. [Wholesale Cost]        " << endl;
-					cout << setw(35) << "3. [Date Added]            " << endl;
-					cout << setw(35) << "4. [Return to Main Menu]   " << endl << endl;
+					cout << setw(35) << "1. [ Quantity ]            " << endl;
+					cout << setw(35) << "2. [ Wholesale Cost ]      " << endl;
+					cout << setw(35) << "3. [ Date Added ]          " << endl;
+					cout << setw(35) << "4. [ Return to Main Menu ] " << endl << endl;
 					cout << setw(25) << "Enter choice: ";
 					cin >> choice;
 					cin.clear();
@@ -141,7 +141,6 @@ void Report::menu()
 			cin.clear();
 			cin.ignore(1000, '\n');
 			choice = 0;
-			system("pause");
 		}
 	}
 }
@@ -150,6 +149,7 @@ void Report::menu()
 void Report::display() 
 {
 	system("cls");
+	cout << endl;
 	cout << setw(35) << "{ DISPLAY INVENTORY }      " << endl << endl;
 	for (int i = 0; i < size; i++)
 	{
@@ -212,48 +212,38 @@ void Report::retailValue()
 // Sort by greatest quantity first.
 void Report::quantity()
 {
-	int jcount;
-	int min = 999;
 	Book temp;
 
-	for (int i = 1; i < size; i++)
+	for (int i = 0; i < size; i++)
 	{
-		for (int j = 0; j < size - i; j++)
+		for (int j = 0; j < size; j++)
 		{
-			if (books[j].getQuantity() < min)
+			if (books[i].getQuantity() > books[j].getQuantity())
 			{
-				min = books[j].getQuantity();
-				jcount = j;
+				temp = books[i];
+				books[i] = books[j];
+				books[j] = temp;
 			}
 		}
-		temp = books[size - i];
-		books[size - i] = books[jcount];
-		books[jcount] = temp;
-		min = 999;
 	}
 }
 
 // Sort by greatest cost first.
 void Report::cost()
 {
-	int jcount;
-	double min = 99999.00;
 	Book temp;
 
-	for (int i = 1; i < size; i++)
+	for (int i = 0; i < size; i++)
 	{
-		for (int j = 0; j < size - i; j++)
+		for (int j = 0; j < size; j++)
 		{
-			if (books[j].getWholesaleCost() < min)
+			if (books[i].getWholesaleCost() > books[j].getWholesaleCost())
 			{
-				min = books[j].getWholesaleCost();
-				jcount = j;
+				temp = books[i];
+				books[i] = books[j];
+				books[j] = temp;
 			}
 		}
-		temp = books[size - i];
-		books[size - i] = books[jcount];
-		books[jcount] = temp;
-		min = 99999.00;
 	}
 }
 
